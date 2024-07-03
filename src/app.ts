@@ -4,6 +4,8 @@ import { timeout } from 'hono/timeout'
 import { bearerAuth } from 'hono/bearer-auth'
 import { HTTPException } from 'hono/http-exception'
 import { StatusCode } from 'hono/utils/http-status'
+import { cors } from 'hono/cors'
+import { secureHeaders } from 'hono/secure-headers'
 import { batchPushAllInOne, PushAllInOneConfig, PushType, runPushAllInOne } from './utils/push'
 import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
 import { winstonLogger } from './utils/logger'
@@ -12,6 +14,8 @@ const app = new Hono()
 
 app.use(logger())
 app.use(timeout(TIMEOUT))
+app.use(cors())
+app.use(secureHeaders())
 
 app.onError((error, c) => {
     const message = process.env.NODE_ENV === 'production' ? `${error.name}: ${error.message}` : error.stack
