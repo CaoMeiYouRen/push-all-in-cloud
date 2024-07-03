@@ -1,0 +1,88 @@
+{
+  "name": "push-all-in-cloud",
+  "version": "0.1.0",
+  "description": "基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式",
+  "author": "CaoMeiYouRen",
+  "private": true,
+  "license": "AGPL-3.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "cross-env NODE_ENV=production eslint src --fix --ext .ts,.js",
+    "release": "semantic-release",
+    "build": "rimraf dist && tsc",
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
+    "rm": "rimraf node_modules",
+    "watch": "tsc -w",
+    "start": "node ./dist/index",
+    "commit": "cz",
+    "prepare": "husky install",
+    "test": "jest --config jest.config.ts",
+    "test:coverage": "jest --config jest.config.ts --coverage"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.3",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/debug": "^4.1.12",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "commitizen": "^4.2.3",
+    "conventional-changelog-cmyr-config": "^2.1.2",
+    "cross-env": "^7.0.2",
+    "cz-conventional-changelog-cmyr": "^1.1.1",
+    "debug": "^4.3.4",
+    "eslint": "^8.50.0",
+    "eslint-config-cmyr": "^1.1.31",
+    "eslint-plugin-import": "^2.28.1",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.2",
+    "rimraf": "^5.0.5",
+    "semantic-release": "21.0.1",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "push-all-in-one": "^3.5.3",
+    "tslib": "^2.6.3"
+  },
+  "keywords": [
+    "push",
+    "docker",
+    "vercel",
+    "hono",
+    "nodejs",
+    "notifications"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "homepage": "https://github.com/CaoMeiYouRen/push-all-in-cloud#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaoMeiYouRen/push-all-in-cloud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CaoMeiYouRen/push-all-in-cloud/issues"
+  },
+  "type": "module",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog-cmyr"
+    }
+  },
+  "changelog": {
+    "language": "zh"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run lint",
+      "git add"
+    ]
+  }
+}
