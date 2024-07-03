@@ -22,3 +22,7 @@ export const PORT = parseInt(process.env.PORT) || 3000
 export const NO_LOGFILES = process.env.NO_LOGFILES === 'true'
 
 export const TIMEOUT = parseInt(process.env.TIMEOUT) || 20000
+
+export const AUTH_PUSH_KEY = process.env.AUTH_PUSH_KEY
+
+export const AUTH_FORWARD_KEY = process.env.AUTH_FORWARD_KEY

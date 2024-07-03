@@ -74,6 +74,8 @@ type ForwardResponse = {
 | 环境变量                | 说明                                                         |
 | ----------------------- | ------------------------------------------------------------ |
 | PORT                    | 运行端口                                                     |
+| AUTH_PUSH_KEY           | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
+| AUTH_FORWARD_KEY        | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
 | SCTKEY                  | Server酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/      |
 | EMAIL_AUTH_USER         | 自定义邮箱。发件邮箱                                         |
 | EMAIL_AUTH_PASS         | 发件授权码(或密码)                                           |
