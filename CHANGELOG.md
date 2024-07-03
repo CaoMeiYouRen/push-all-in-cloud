@@ -1,5 +1,17 @@
 # push-all-in-cloud
 
+# [1.1.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.0.0...v1.1.0) (2024-07-03)
+
+
+### ✨ 新功能
+
+* 新增 权限验证；增加全局错误捕获 ([b769bcd](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/b769bcd))
+
+
+### 🐛 Bug 修复
+
+* 启用 cors/secureHeaders 中间件以增强安全性 ([0f829e6](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/0f829e6))
+
 # 1.0.0 (2024-07-03)
 
 
