@@ -28,7 +28,7 @@ RUN pnpm add @vercel/nft@0.24.4 fs-extra@11.2.0 --save-prod
 COPY --from=builder /app /app
 
 RUN export PROJECT_ROOT=/app/ && \
-    node /app/scripts/minify-docker.js && \
+    node /app/scripts/minify-docker.cjs && \
     rm -rf /app/node_modules /app/scripts && \
     mv /app/app-minimal/node_modules /app/ && \
     rm -rf /app/app-minimal
