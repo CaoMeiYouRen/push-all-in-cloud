@@ -1,6 +1,9 @@
 <h1 align="center">push-all-in-cloud </h1>
 <p>
   <img alt="Version" src="https://img.shields.io/github/package-json/v/CaoMeiYouRen/push-all-in-cloud.svg" />
+  <a href="https://hub.docker.com/r/caomeiyouren/push-all-in-cloud" target="_blank">
+    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/caomeiyouren/push-all-in-cloud">
+  </a>
   <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud/actions?query=workflow%3ARelease" target="_blank">
     <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/CaoMeiYouRen/push-all-in-cloud/release.yml?branch=master">
   </a>
@@ -15,6 +18,7 @@
     <img alt="License: AGPL--3.0" src="https://img.shields.io/github/license/CaoMeiYouRen/push-all-in-cloud?color=yellow" />
   </a>
 </p>
+
 
 
 > 基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式

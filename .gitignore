@@ -36,3 +36,5 @@ sessions
 #public
 dist
 logs
+
+.vercel
