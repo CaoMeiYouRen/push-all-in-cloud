@@ -27,12 +27,12 @@ app.post('/push', async (c) => {
 type ForwardBody = {
     title: string
     desp?: string
-    pushConfig: PushAllInOneConfig<PushType>
-}
+    // pushConfig: PushAllInOneConfig<PushType>
+} & PushAllInOneConfig<PushType>
 
 app.post('/forward', async (c) => {
-    const { title, desp, pushConfig } = await c.req.json<ForwardBody>()
-    const { data, headers, status, statusText } = await runPushAllInOne(title, desp, pushConfig)
+    const { title, desp, type, config } = await c.req.json<ForwardBody>()
+    const { data, headers, status, statusText } = await runPushAllInOne(title, desp, { type, config } as PushAllInOneConfig<PushType>)
     return c.json({
         message: 'OK',
         data: {
