@@ -9,10 +9,10 @@
   "scripts": {
     "lint": "cross-env NODE_ENV=production eslint src --fix --ext .ts,.js",
     "release": "semantic-release",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsup",
     "dev": "cross-env NODE_ENV=development tsx watch --clear-screen=false src/index.ts",
     "watch": "tsc -w",
-    "start": "node ./dist/index",
+    "start": "node ./dist/index.js",
     "commit": "cz",
     "prepare": "husky install",
     "test": "jest --config jest.config.ts",
@@ -46,6 +46,7 @@
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsup": "^8.1.0",
     "typescript": "^5.0.4",
     "vercel": "^34.2.8"
   },

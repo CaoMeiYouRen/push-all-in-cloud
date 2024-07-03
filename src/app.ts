@@ -1,10 +1,13 @@
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
+import { timeout } from 'hono/timeout'
 import { batchPushAllInOne, PushAllInOneConfig, PushType, runPushAllInOne } from './utils/push'
+import { TIMEOUT } from './env'
 
 const app = new Hono()
 
 app.use(logger())
+app.use(timeout(TIMEOUT))
 
 app.all('/', (c) => c.json({
     message: 'Hello PushAllInCloud!',

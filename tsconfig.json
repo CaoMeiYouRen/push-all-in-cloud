@@ -10,9 +10,13 @@
         "outDir": "./dist",
         "importHelpers": true,
         "esModuleInterop": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node",
         "strictPropertyInitialization": false,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
+        // "allowImportingTsExtensions": true,
+        // "noEmit": true,
         "removeComments": true,
         "baseUrl": ".",
         "paths": {
@@ -26,12 +30,11 @@
             "dom.iterable",
             "scripthost"
         ],
-        "skipLibCheck": true,
-        "moduleResolution": "node"
     },
     "include": [
         "src/*.ts",
         "src/**/*.ts",
+        // "api/index.ts",
         "node_modules/@types",
     ],
     "exclude": [

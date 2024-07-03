@@ -103,4 +103,4 @@ jobs:
           user: ${{ secrets.DOCKER_USERNAME }}
           pass: ${{ secrets.DOCKER_PASSWORD }}
           slug: ${{ github.repository }}
-          description: false
+          description: "基于 push-all-in-one 和 hono 开发的云函数推送服务"

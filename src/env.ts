@@ -20,3 +20,5 @@ export const PORT = parseInt(process.env.PORT) || 3000
 
 // 是否禁用写入日志到文件
 export const NO_LOGFILES = process.env.NO_LOGFILES === 'true'
+
+export const TIMEOUT = parseInt(process.env.TIMEOUT) || 20000
