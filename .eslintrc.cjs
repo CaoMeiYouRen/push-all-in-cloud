@@ -1,4 +1,9 @@
 module.exports = {
     root: true,
-    extends: 'cmyr',
+    extends: [
+        'cmyr',
+    ],
+    rules: {
+        'no-console': 0,
+    },
 }

@@ -35,3 +35,4 @@ sessions
 *.assets
 #public
 dist
+logs

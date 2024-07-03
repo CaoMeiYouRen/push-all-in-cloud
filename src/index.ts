@@ -1,6 +1,11 @@
-class Hello {
-    msg = 'hello'
-}
-const a = new Hello()
+import { serve } from '@hono/node-server'
+import { PORT } from './env'
+import app from './app'
+import logger from './utils/logger'
 
-console.log(a.msg)
+serve({
+    fetch: app.fetch,
+    port: PORT,
+})
+
+logger.info(`push-all-in-cloud 启动成功，访问地址：http://localhost:${PORT}`)

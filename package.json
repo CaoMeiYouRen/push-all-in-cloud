@@ -10,8 +10,7 @@
     "lint": "cross-env NODE_ENV=production eslint src --fix --ext .ts,.js",
     "release": "semantic-release",
     "build": "rimraf dist && tsc",
-    "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
-    "rm": "rimraf node_modules",
+    "dev": "cross-env NODE_ENV=development tsx watch --clear-screen=false src/index.ts",
     "watch": "tsc -w",
     "start": "node ./dist/index",
     "commit": "cz",
@@ -48,8 +47,15 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@hono/node-server": "^1.12.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "hono": "^4.4.11",
     "push-all-in-one": "^3.5.3",
-    "tslib": "^2.6.3"
+    "tslib": "^2.6.3",
+    "tsx": "^4.16.2",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "keywords": [
     "push",
@@ -60,7 +66,7 @@
     "notifications"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "homepage": "https://github.com/CaoMeiYouRen/push-all-in-cloud#readme",
   "repository": {
