@@ -175,8 +175,8 @@ export type PushConfig = Required<{
         SCTKEY: string
     }
     Dingtalk?: {
-        ACCESS_TOKEN: string
-        SECRET?: string
+        DINGTALK_ACCESS_TOKEN: string
+        DINGTALK_SECRET?: string
     }
     CustomEmail?: {
         EMAIL_TYPE: CustomEmailType // 邮件类型
@@ -188,7 +188,7 @@ export type PushConfig = Required<{
     }
     WechatRobot?: {
         WX_ROBOT_KEY: string
-        MSG_TYPE: MsgType
+        WX_ROBOT_MSG_TYPE: MsgType
     }
     WechatApp?: {
         WX_APP_CORPID: string
@@ -198,8 +198,8 @@ export type PushConfig = Required<{
     }
     PushPlus?: {
         PUSH_PLUS_TOKEN: string
-        TEMPLATE_TYPE?: TemplateType
-        CHANNEL_TYPE?: ChannelType
+        PUSH_PLUS_TEMPLATE_TYPE?: TemplateType
+        PUSH_PLUS_CHANNEL_TYPE?: ChannelType
     }
     IGot?: {
         I_GOT_KEY: string
@@ -269,15 +269,15 @@ export async function runPushAllInOne(title: string, desp: string, pushConfig: P
             return response
         }
         case 'Dingtalk': {
-            const { ACCESS_TOKEN, SECRET } = pushConfig.config
-            const dingtalk = new Dingtalk(ACCESS_TOKEN, SECRET)
+            const { DINGTALK_ACCESS_TOKEN, DINGTALK_SECRET } = pushConfig.config
+            const dingtalk = new Dingtalk(DINGTALK_ACCESS_TOKEN, DINGTALK_SECRET)
             const response = await dingtalk.send(title, desp)
             return response
         }
         case 'WechatRobot': {
-            const { WX_ROBOT_KEY, MSG_TYPE } = pushConfig.config
+            const { WX_ROBOT_KEY, WX_ROBOT_MSG_TYPE } = pushConfig.config
             const wechatRobot = new WechatRobot(WX_ROBOT_KEY)
-            const response = await wechatRobot.send(`${title}\n${desp}`, MSG_TYPE)
+            const response = await wechatRobot.send(`${title}\n${desp}`, WX_ROBOT_MSG_TYPE)
             return response
         }
         case 'WechatApp': {
@@ -292,9 +292,9 @@ export async function runPushAllInOne(title: string, desp: string, pushConfig: P
             return response
         }
         case 'PushPlus': {
-            const { PUSH_PLUS_TOKEN, TEMPLATE_TYPE, CHANNEL_TYPE } = pushConfig.config
+            const { PUSH_PLUS_TOKEN, PUSH_PLUS_TEMPLATE_TYPE, PUSH_PLUS_CHANNEL_TYPE } = pushConfig.config
             const pushplus = new PushPlus(PUSH_PLUS_TOKEN)
-            const response = await pushplus.send(title, desp, TEMPLATE_TYPE, CHANNEL_TYPE)
+            const response = await pushplus.send(title, desp, PUSH_PLUS_TEMPLATE_TYPE, PUSH_PLUS_CHANNEL_TYPE)
             return response
         }
         case 'IGot': {

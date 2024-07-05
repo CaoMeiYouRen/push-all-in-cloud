@@ -128,23 +128,27 @@ type PushBody = {
     title: string
     desp?: string
 }
+
+type PushType = "ServerChanTurbo" | "Dingtalk" | "CustomEmail" | "WechatRobot" | "WechatApp" | "PushPlus" | "IGot" | "Qmsg" | "XiZhi" | "PushDeer" | "Discord" | "Telegram" | "OneBot"
+
 type ForwardBody = {
     title: string
     desp?: string
     type: PushType
-    config: Record<string,string>
+    // config 相关配置请参考下文的环境变量配置
+    config: Record<string, string>
 }
+
 type PushResponse = {
     message: string
     data: PromiseSettledResult<Pick<AxiosResponse<any>, 'data' | 'headers' | 'status' | 'statusText'>>[]
 }
+
 type ForwardResponse = {
     message: string
     data: Pick<AxiosResponse<any>, 'data' | 'headers' | 'status' | 'statusText'>
 }
 ```
-
-
 
 ### 环境变量配置
 
@@ -153,7 +157,7 @@ type ForwardResponse = {
 | PORT                    | 运行端口                                                     |
 | AUTH_PUSH_KEY           | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
 | AUTH_FORWARD_KEY        | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
-| SCTKEY                  | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/      |
+| SCTKEY                  | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/     |
 | EMAIL_AUTH_USER         | 自定义邮箱。发件邮箱                                         |
 | EMAIL_AUTH_PASS         | 发件授权码(或密码)                                           |
 | EMAIL_HOST              | 发件域名                                                     |
@@ -164,11 +168,12 @@ type ForwardResponse = {
 | WX_ROBOT_KEY            | 企业微信群机器人。官方文档：https://work.weixin.qq.com/help?person_id=1&doc_id=13376 |
 | WX_ROBOT_MSG_TYPE       | 消息类型，默认 `text`                                        |
 | WX_APP_CORPID           | 【推荐】企业微信企业 ID，获取方式参考 https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid |
-| WX_APP_AGENTID          | 企业应用的 id。企业内部开发，可在应用的设置页面查看           |
+| WX_APP_AGENTID          | 企业应用的 id。企业内部开发，可在应用的设置页面查看          |
 | WX_APP_SECRET           | 应用的凭证密钥，获取方式参考：https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/secret |
 | WX_APP_USERID           | 指定接收消息的成员。若不指定则默认为 ”@all”。                |
 | PUSH_PLUS_TOKEN         | pushplus 推送加开放平台。官方文档：http://pushplus.hxtrip.com/doc/ |
 | PUSH_PLUS_TEMPLATE_TYPE | 发送消息模板，默认为 html                                    |
+| PUSH_PLUS_CHANNEL_TYPE  | 发送渠道，默认为 wechat                                      |
 | I_GOT_KEY               | iGot 推送，官方文档：https://wahao.github.io/Bark-MP-helper  |
 | QMSG_KEY                | Qmsg 酱 推送，官方文档：https://qmsg.zendee.cn               |
 | XI_ZHI_KEY              | 息知 推送，官方文档：https://xz.qqoq.net/#/index             |
