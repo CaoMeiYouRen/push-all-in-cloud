@@ -14,6 +14,9 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      packages: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
