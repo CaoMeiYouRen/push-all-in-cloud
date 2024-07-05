@@ -80,8 +80,8 @@ jobs:
           # 发布到 docker.io / ghcr.io / registry.cn-hangzhou.aliyuncs.com
           images: |
             ${{ github.repository }}
-            ghcr.io/${{ github.repository }}
             registry.cn-hangzhou.aliyuncs.com/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           tags: |
             type=match,priority=1100,pattern=\d.\d.\d,value=${{env.GIT_TAG}},enable=true
             type=raw,value=latest,enable=true

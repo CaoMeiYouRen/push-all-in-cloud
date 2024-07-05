@@ -15,7 +15,7 @@
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/LICENSE" target="_blank">
-    <img alt="License: AGPL--3.0" src="https://img.shields.io/github/license/CaoMeiYouRen/push-all-in-cloud?color=yellow" />
+    <img alt="License: AGPL-3.0" src="https://img.shields.io/github/license/CaoMeiYouRen/push-all-in-cloud?color=yellow" />
   </a>
 </p>
 
@@ -31,13 +31,90 @@
 ## 📦 依赖要求
 
 
-- node >=16
+- node >=18
+- pnpm >= 9
 
-## 🚀 安装
+## 🚀 部署
 
-TODO
+### Vercel 部署（推荐）
+
+点击以下按钮一键部署到 Vercel。
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCaoMeiYouRen%2Fpush-all-in-cloud.git)
+
+### Docker 镜像
+
+支持两种注册表：
+
+- Docker Hub: [`caomeiyouren/push-all-in-cloud`](https://hub.docker.com/r/caomeiyouren/push-all-in-cloud)
+- GitHub: [`ghcr.io/caomeiyouren/push-all-in-cloud`](https://github.com/CaoMeiYouRen/push-all-in-cloud/pkgs/container/push-all-in-cloud)
+
+支持以下架构：
+
+- `linux/amd64`
+- `linux/arm64`
+
+有以下几种 tags：
+
+| Tag            | 描述     | 举例          |
+| :------------- | :------- | :------------ |
+| `latest`       | 最新     | `latest`      |
+| `{YYYY-MM-DD}` | 特定日期 | `2024-06-07`  |
+| `{sha-hash}`   | 特定提交 | `sha-0891338` |
+| `{version}`    | 特定版本 | `1.2.3`       |
+
+### Docker Compose 部署
+
+下载 [docker-compose.yml](https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/docker-compose.yml)
+
+```sh
+wget https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/docker-compose.yml
+```
+
+检查有无需要修改的配置
+
+```sh
+vim docker-compose.yml  # 也可以是你喜欢的编辑器
+```
+
+> 在公网部署时请务必修改 AUTH_PUSH_KEY、AUTH_FORWARD_KEY 环境变量
+>
+
+启动
+
+```sh
+docker-compose up -d
+```
+
+在浏览器中打开 `http://{Server IP}:3000` 即可查看结果
+
+### Node.js 部署
+
+确保本地已安装 Node.js 和 pnpm。
+
+```sh
+# 下载源码
+git clone https://github.com/CaoMeiYouRen/push-all-in-cloud.git  --depth=1
+cd push-all-in-cloud
+# 安装依赖
+pnpm i --frozen-lockfile
+# 构建项目
+pnpm build
+# 启动项目
+pnpm start
+```
+
+在浏览器中打开 `http://{Server IP}:3000` 即可查看结果
 
 ## 👨‍💻 使用
+
+如果在本地部署，基础路径为 `http://localhost:3000`
+
+在服务器或云函数部署则为  `http(s)://{Server IP}`。
+
+例如：
+
+如果基础路径为 `https://example.vercel.app`，则 `/push` 的完整路径为 `https://example.vercel.app/push`
 
 ### 接口说明
 
@@ -76,7 +153,7 @@ type ForwardResponse = {
 | PORT                    | 运行端口                                                     |
 | AUTH_PUSH_KEY           | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
 | AUTH_FORWARD_KEY        | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
-| SCTKEY                  | Server酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/      |
+| SCTKEY                  | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/      |
 | EMAIL_AUTH_USER         | 自定义邮箱。发件邮箱                                         |
 | EMAIL_AUTH_PASS         | 发件授权码(或密码)                                           |
 | EMAIL_HOST              | 发件域名                                                     |
@@ -86,8 +163,8 @@ type ForwardResponse = {
 | DINGTALK_SECRET         | 钉钉机器人加签安全秘钥（HmacSHA256）                         |
 | WX_ROBOT_KEY            | 企业微信群机器人。官方文档：https://work.weixin.qq.com/help?person_id=1&doc_id=13376 |
 | WX_ROBOT_MSG_TYPE       | 消息类型，默认 `text`                                        |
-| WX_APP_CORPID           | 【推荐】企业微信企业ID，获取方式参考 https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid |
-| WX_APP_AGENTID          | 企业应用的id。企业内部开发，可在应用的设置页面查看           |
+| WX_APP_CORPID           | 【推荐】企业微信企业 ID，获取方式参考 https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid |
+| WX_APP_AGENTID          | 企业应用的 id。企业内部开发，可在应用的设置页面查看           |
 | WX_APP_SECRET           | 应用的凭证密钥，获取方式参考：https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/secret |
 | WX_APP_USERID           | 指定接收消息的成员。若不指定则默认为 ”@all”。                |
 | PUSH_PLUS_TOKEN         | pushplus 推送加开放平台。官方文档：http://pushplus.hxtrip.com/doc/ |
