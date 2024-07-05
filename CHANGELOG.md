@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [1.2.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.1.0...v1.2.0) (2024-07-05)
+
+
+### ✨ 新功能
+
+* 更改 转发推送时，部分配置的名称；更新说明文档 ([c0a5267](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/c0a5267))
+
 # [1.1.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.0.0...v1.1.0) (2024-07-03)
 
 
