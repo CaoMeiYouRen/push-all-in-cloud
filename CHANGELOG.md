@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [1.2.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.0...v1.2.1) (2024-07-05)
+
+
+### 🐛 Bug 修复
+
+* 修复 release 无法推送到 GitHub package 的 bug ([2d8f488](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/2d8f488))
+
 # [1.2.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.1.0...v1.2.0) (2024-07-05)
 
 
