@@ -1,9 +1,7 @@
 import path from 'path'
 import * as winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'
-import { __DEV__, NO_LOGFILES } from '../env'
-
-const LOGFILES = NO_LOGFILES
+import { __DEV__, LOGFILES } from '../env'
 
 const logDir = path.resolve('logs')
 
