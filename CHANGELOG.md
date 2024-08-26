@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [1.2.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.1...v1.2.2) (2024-08-26)
+
+
+### 🐛 Bug 修复
+
+* 修复 日志输出环境变量错误 ([77b991f](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/77b991f))
+
 ## [1.2.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.0...v1.2.1) (2024-07-05)
 
 
