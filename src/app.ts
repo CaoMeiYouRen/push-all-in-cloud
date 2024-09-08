@@ -46,7 +46,7 @@ type PushBody = {
 }
 app.post('/push', AUTH_PUSH_KEY && bearerAuth({ token: AUTH_PUSH_KEY }), async (c) => {
     const { title, desp } = await c.req.json<PushBody>()
-    const data = await batchPushAllInOne(title, desp)
+    const data = await batchPushAllInOne(title, desp, process.env)
     return c.json({
         message: 'OK',
         data,

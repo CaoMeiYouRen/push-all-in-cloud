@@ -38,3 +38,5 @@ dist
 logs
 
 .vercel
+.dev.vars
+.wrangler

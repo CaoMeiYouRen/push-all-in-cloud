@@ -1,7 +1,8 @@
-import { defineConfig } from 'tsup'
+import { Options, defineConfig } from 'tsup'
 
-export default defineConfig({
-    entry: ['src/vercel.ts', 'src/index.ts'],
+const option: Options = {
+    platform: 'node',
+    entry: ['src/index.ts', 'src/vercel.ts'],
     format: ['esm'],
     outExtension({ format }) {
         switch (format) {
@@ -40,4 +41,5 @@ export default defineConfig({
     // external: [],
     // noExternal: [/(.*)/], // 将依赖打包到一个文件中
     // bundle: true,
-})
+}
+export default defineConfig([option])
