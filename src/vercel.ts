@@ -5,6 +5,9 @@ import logger from './utils/logger'
 export const runtime = 'nodejs'
 
 export const config = {
+    api: {
+        bodyParser: false,
+    },
 }
 
 logger.info('push-all-in-cloud 云函数启动成功')
