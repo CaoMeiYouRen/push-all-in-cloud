@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [1.2.4](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.3...v1.2.4) (2024-10-04)
+
+
+### 🐛 Bug 修复
+
+* 优化 环境变量的读取 ([3052320](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/3052320))
+
 ## [1.2.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.2...v1.2.3) (2024-10-04)
 
 
