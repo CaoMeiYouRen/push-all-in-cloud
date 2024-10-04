@@ -6,6 +6,7 @@ import { HTTPException } from 'hono/http-exception'
 import { StatusCode } from 'hono/utils/http-status'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
+import { env } from 'hono/adapter'
 import { batchPushAllInOne, PushAllInOneConfig, PushType, runPushAllInOne } from './utils/push'
 import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
 import { winstonLogger } from './utils/logger'
@@ -46,7 +47,8 @@ type PushBody = {
 }
 app.post('/push', AUTH_PUSH_KEY && bearerAuth({ token: AUTH_PUSH_KEY }), async (c) => {
     const { title, desp } = await c.req.json<PushBody>()
-    const data = await batchPushAllInOne(title, desp, process.env)
+    const envValue = env(c) as Record<string, string>
+    const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
         message: 'OK',
         data,
