@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [1.2.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.2...v1.2.3) (2024-10-04)
+
+
+### 🐛 Bug 修复
+
+* 修复 vercel post 请求解析错误的问题 ([33e2334](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/33e2334))
+
 ## [1.2.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.1...v1.2.2) (2024-08-26)
 
 
