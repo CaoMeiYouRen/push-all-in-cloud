@@ -60,7 +60,7 @@
     "push-all-in-one": "^3.6.0",
     "tslib": "^2.6.3",
     "tsx": "^4.16.2",
-    "winston": "^3.13.0",
+    "winston": "^3.15.0",
     "winston-daily-rotate-file": "^5.0.0"
   },
   "keywords": [
