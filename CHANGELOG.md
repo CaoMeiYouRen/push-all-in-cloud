@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [1.3.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.4...v1.3.0) (2024-10-06)
+
+
+### ✨ 新功能
+
+* 增加 Server 酱³ 支持；添加接口调用例子 ([24bc4d6](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/24bc4d6)), closes [#3](https://github.com/CaoMeiYouRen/push-all-in-cloud/issues/3)
+
 ## [1.2.4](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.3...v1.2.4) (2024-10-04)
 
 
