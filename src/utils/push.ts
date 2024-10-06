@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { ServerChanTurbo, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, MsgType, TemplateType, CustomEmailType, OneBotMsgType, ChannelType, PushDeerPushType, QmsgPushType } from 'push-all-in-one'
+import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, MsgType, TemplateType, CustomEmailType, OneBotMsgType, ChannelType, PushDeerPushType, QmsgPushType } from 'push-all-in-one'
 import logger from './logger'
 
 const warn = (text: string) => logger.warn(text)
@@ -23,6 +23,15 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         info('Server酱·Turbo 已加入推送队列')
     } else {
         info('未配置 Server酱·Turbo，已跳过')
+    }
+
+    if (env.SERVER_CHAN_V3_KEY) {
+        // Server酱³。官方文档：https://sc3.ft07.com/doc
+        const serverChanV3 = new ServerChanV3(env.SERVER_CHAN_V3_KEY)
+        pushs.push(serverChanV3.send(title, desp))
+        info('Server酱³ 已加入推送队列')
+    } else {
+        info('未配置 Server酱³，已跳过')
     }
 
     if (env.EMAIL_AUTH_USER && env.EMAIL_AUTH_PASS && env.EMAIL_HOST && env.EMAIL_PORT && env.EMAIL_TO_ADDRESS) {
@@ -174,6 +183,9 @@ export type PushConfig = Required<{
     ServerChanTurbo?: {
         SCTKEY: string
     }
+    ServerChanV3?: {
+        SERVER_CHAN_V3_KEY: string
+    }
     Dingtalk?: {
         DINGTALK_ACCESS_TOKEN: string
         DINGTALK_SECRET?: string
@@ -261,6 +273,11 @@ export async function runPushAllInOne(title: string, desp: string, pushConfig: P
             const { SCTKEY } = pushConfig.config
             const serverChanTurbo = new ServerChanTurbo(SCTKEY)
             return serverChanTurbo.send(title, desp)
+        }
+        case 'ServerChanV3': {
+            const { SERVER_CHAN_V3_KEY } = pushConfig.config
+            const serverChanV3 = new ServerChanV3(SERVER_CHAN_V3_KEY)
+            return serverChanV3.send(title, desp)
         }
         case 'CustomEmail': {
             const customEmail = new CustomEmail(pushConfig.config)

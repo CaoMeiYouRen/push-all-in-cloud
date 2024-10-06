@@ -68,7 +68,7 @@
 下载 [docker-compose.yml](https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/docker-compose.yml)
 
 ```sh
-wget https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/docker-compose.yml
+wget https://raw.githubusercontent.com/CaoMeiYouRen/push-all-in-cloud/refs/heads/master/docker-compose.yml
 ```
 
 检查有无需要修改的配置
@@ -150,6 +150,60 @@ type ForwardResponse = {
 }
 ```
 
+### /push 接口调用例子
+
+```ts
+// 注意：/push 接口需要先配置环境变量！！！
+const url = 'http://your-server-address/push'; // 请将 http://your-server-address 替换为真实地址！
+const authToken = 'your-auth-push-key'; // 请将 your-auth-push-key 替换为真实 AUTH_PUSH_KEY
+
+const payload = {
+    title: '测试推送标题',
+    desp: '这是测试推送的内容'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+    },
+    body: JSON.stringify(payload)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
+### /forward 接口调用例子
+
+```ts
+const url = 'http://your-server-address/forward'; // 请将 http://your-server-address 替换为真实地址！
+const authToken = 'your-auth-forward-key'; // 请将 your-auth-forward-key 替换为真实 AUTH_FORWARD_KEY
+
+const payload = {
+    title: '测试推送标题',
+    desp: '这是测试推送的内容',
+    type: 'Telegram', // 选择推送渠道，例如 Telegram
+    config: {
+        TELEGRAM_BOT_TOKEN: 'your-telegram-bot-token',
+        TELEGRAM_CHAT_ID: 'your-telegram-chat-id'
+    }
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+    },
+    body: JSON.stringify(payload)
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+```
+
 ### 环境变量配置
 
 | 环境变量                | 说明                                                         |
@@ -158,6 +212,7 @@ type ForwardResponse = {
 | AUTH_PUSH_KEY           | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
 | AUTH_FORWARD_KEY        | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
 | SCTKEY                  | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/     |
+| SERVER_CHAN_V3_KEY      | Server 酱³ 的 sendkey。官方文档：https://sc3.ft07.com/doc     |
 | EMAIL_AUTH_USER         | 自定义邮箱。发件邮箱                                         |
 | EMAIL_AUTH_PASS         | 发件授权码(或密码)                                           |
 | EMAIL_HOST              | 发件域名                                                     |
