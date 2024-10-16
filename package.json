@@ -58,7 +58,7 @@
     "dotenv": "^16.4.5",
     "hono": "^4.6.5",
     "push-all-in-one": "^3.6.0",
-    "tslib": "^2.6.3",
+    "tslib": "^2.8.0",
     "tsx": "^4.19.1",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0"
