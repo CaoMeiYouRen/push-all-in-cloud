@@ -121,8 +121,8 @@ importers:
         specifier: ^37.14.0
         version: 37.14.0
       wrangler:
-        specifier: ^3.84.0
-        version: 3.84.0
+        specifier: ^3.84.1
+        version: 3.84.1
 
 packages:
 
@@ -5609,8 +5609,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.84.0:
-    resolution: {integrity: sha512-EA8oh7YQmZ3kD+a5MId9reHKGgXpodmsPWMLriE5gT5YmG9is66n0AA2tyLzQZKZXmgbo6JyGxvCDPcLeb/X0w==}
+  wrangler@3.84.1:
+    resolution: {integrity: sha512-w27/QpIk2qz6aMIVi9T8cDcXMvh/RXjcL+vf4o5J2GpQAE4U7wTCNHyaY9H3oTJWRN97KqCAEbiHBNtTKoUJEw==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -11944,7 +11944,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20241022.0
       '@cloudflare/workerd-windows-64': 1.20241022.0
 
-  wrangler@3.84.0:
+  wrangler@3.84.1:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@cloudflare/workers-shared': 0.7.0
