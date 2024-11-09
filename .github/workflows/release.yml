@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+      - beta
+  workflow_dispatch:
 # 仅取消针对当前工作流正在进行的作业或运行
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
