@@ -118,8 +118,8 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       vercel:
-        specifier: ^38.0.0
-        version: 38.0.0
+        specifier: ^39.0.0
+        version: 39.0.0
       wrangler:
         specifier: ^3.86.1
         version: 3.86.1
@@ -5536,8 +5536,8 @@ packages:
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
-  vercel@38.0.0:
-    resolution: {integrity: sha512-komgRICuCoOdJn/BgTYN69DvRY3/BZYsz1pWUWjgAmlbgVWdnVcQCyVtdBvg6mAUl4gaOlXpG7ax50pt21GxTg==}
+  vercel@39.0.0:
+    resolution: {integrity: sha512-V1TB0mk8eA+cVneTJYaV5KJobzuQFlet923ixgrT660NReWaxc0pk2RVwmoLfGqv2JXDJBSpZhLq0YeYt4VPmA==}
     engines: {node: '>= 16'}
     hasBin: true
 
@@ -11836,7 +11836,7 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vercel@38.0.0:
+  vercel@39.0.0:
     dependencies:
       '@vercel/build-utils': 8.4.12
       '@vercel/fun': 1.1.0
