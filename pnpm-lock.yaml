@@ -21,8 +21,8 @@ importers:
         specifier: ^4.6.10
         version: 4.6.10
       push-all-in-one:
-        specifier: 4.0.0-beta.2
-        version: 4.0.0-beta.2
+        specifier: 4.0.0
+        version: 4.0.0
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -4634,8 +4634,8 @@ packages:
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
-  push-all-in-one@4.0.0-beta.2:
-    resolution: {integrity: sha512-xl9maS3ISZSmLhjQ+CyupkNwif4jr7AG1ahHNcoQlf2Hr5UQMqj0UH331yjqhuGjAOM+gCk5XponIuEp8IQU3g==}
+  push-all-in-one@4.0.0:
+    resolution: {integrity: sha512-N5hCXli8sMqm5TN7nk0mxOaRMjEyqzHRTwrlaj7fxd2Pan6gfhkM8uHZBKaY/6nBqm4+P+DNgUAwAx+Rgr9VKg==}
     engines: {node: '>=18'}
 
   q@1.5.1:
@@ -10789,7 +10789,7 @@ snapshots:
 
   pure-rand@6.1.0: {}
 
-  push-all-in-one@4.0.0-beta.2:
+  push-all-in-one@4.0.0:
     dependencies:
       '@colors/colors': 1.6.0
       axios: 1.7.7(debug@4.3.7)
