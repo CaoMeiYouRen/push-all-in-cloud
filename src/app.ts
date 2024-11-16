@@ -7,7 +7,8 @@ import { StatusCode } from 'hono/utils/http-status'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
 import { env } from 'hono/adapter'
-import { batchPushAllInOne, PushAllInOneConfig, PushType, runPushAllInOne } from './utils/push'
+import { MetaPushConfig, PushType } from 'push-all-in-one'
+import { batchPushAllInOne, runPushAllInOne } from './utils/push'
 import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
 import { winstonLogger } from './utils/logger'
 
@@ -58,16 +59,15 @@ app.post('/push', AUTH_PUSH_KEY && bearerAuth({ token: AUTH_PUSH_KEY }), async (
 type ForwardBody = {
     title: string
     desp?: string
-    // pushConfig: PushAllInOneConfig<PushType>
-} & PushAllInOneConfig<PushType>
+} & MetaPushConfig<PushType>
 
 app.post('/forward', AUTH_FORWARD_KEY && bearerAuth({ token: AUTH_FORWARD_KEY }), async (c) => {
-    const { title, desp, type, config } = await c.req.json<ForwardBody>()
-    const { data, headers, status, statusText } = await runPushAllInOne(title, desp, { type, config } as PushAllInOneConfig<PushType>)
+    const { title, desp, type, config, option } = await c.req.json<ForwardBody>()
+    const { data, status, statusText } = await runPushAllInOne(title, desp, { type, config, option })
     return c.json({
         message: 'OK',
         data: {
-            data, headers, status, statusText,
+            data, headers: {}, status, statusText,
         },
     })
 })

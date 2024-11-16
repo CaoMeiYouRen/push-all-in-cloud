@@ -23,6 +23,8 @@
 
 > 基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式
 
+**重大更新提示：** `push-all-in-cloud` v2 版本不兼容 v1 及以下低版本，请查看 [CHANGELOG](https://github.com/CaoMeiYouRen/push-all-in-one/blob/master/CHANGELOG.md) 了解改动。
+
 ## 🏠 主页
 
 [https://github.com/CaoMeiYouRen/push-all-in-cloud#readme](https://github.com/CaoMeiYouRen/push-all-in-cloud#readme)
@@ -134,10 +136,8 @@ type PushType = "ServerChanTurbo" | "Dingtalk" | "CustomEmail" | "WechatRobot" |
 type ForwardBody = {
     title: string
     desp?: string
-    type: PushType
-    // config 相关配置请参考下文的环境变量配置
-    config: Record<string, string>
-}
+    // config 相关配置请参考 MetaPushConfig 的类型定义
+} & MetaPushConfig<PushType>
 
 type PushResponse = {
     message: string
@@ -188,7 +188,8 @@ const payload = {
     config: {
         TELEGRAM_BOT_TOKEN: 'your-telegram-bot-token',
         TELEGRAM_CHAT_ID: 'your-telegram-chat-id'
-    }
+    },
+    option: {}
 };
 
 fetch(url, {
@@ -206,41 +207,41 @@ fetch(url, {
 
 ### 环境变量配置
 
-| 环境变量                | 说明                                                         |
-| ----------------------- | ------------------------------------------------------------ |
-| PORT                    | 运行端口                                                     |
-| AUTH_PUSH_KEY           | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
-| AUTH_FORWARD_KEY        | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
-| SCTKEY                  | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/     |
-| SERVER_CHAN_V3_KEY      | Server 酱³ 的 sendkey。官方文档：https://sc3.ft07.com/doc     |
-| EMAIL_AUTH_USER         | 自定义邮箱。发件邮箱                                         |
-| EMAIL_AUTH_PASS         | 发件授权码(或密码)                                           |
-| EMAIL_HOST              | 发件域名                                                     |
-| EMAIL_PORT              | 发件端口                                                     |
-| EMAIL_TO_ADDRESS        | 收件邮箱                                                     |
-| DINGTALK_ACCESS_TOKEN   | 【推荐】钉钉机器人 access_token。官方文档：https://developers.dingtalk.com/document/app/custom-robot-access |
-| DINGTALK_SECRET         | 钉钉机器人加签安全秘钥（HmacSHA256）                         |
-| WX_ROBOT_KEY            | 企业微信群机器人。官方文档：https://work.weixin.qq.com/help?person_id=1&doc_id=13376 |
-| WX_ROBOT_MSG_TYPE       | 消息类型，默认 `text`                                        |
-| WX_APP_CORPID           | 【推荐】企业微信企业 ID，获取方式参考 https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid |
-| WX_APP_AGENTID          | 企业应用的 id。企业内部开发，可在应用的设置页面查看          |
-| WX_APP_SECRET           | 应用的凭证密钥，获取方式参考：https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/secret |
-| WX_APP_USERID           | 指定接收消息的成员。若不指定则默认为 ”@all”。                |
-| PUSH_PLUS_TOKEN         | pushplus 推送加开放平台。官方文档：http://pushplus.hxtrip.com/doc/ |
-| PUSH_PLUS_TEMPLATE_TYPE | 发送消息模板，默认为 html                                    |
-| PUSH_PLUS_CHANNEL_TYPE  | 发送渠道，默认为 wechat                                      |
-| I_GOT_KEY               | iGot 推送，官方文档：https://wahao.github.io/Bark-MP-helper  |
-| QMSG_KEY                | Qmsg 酱 推送，官方文档：https://qmsg.zendee.cn               |
-| XI_ZHI_KEY              | 息知 推送，官方文档：https://xz.qqoq.net/#/index             |
-| PUSH_DEER_PUSH_KEY      | 【推荐】PushDeer 推送，官方文档：https://github.com/easychen/pushdeer |
-| DISCORD_WEBHOOK         | 【推荐】Discord Webhook Url 可在服务器设置 -> 整合 -> Webhook -> 创建 Webhook 中获取。官方文档：https://support.discord.com/hc/zh-tw/articles/228383668-%E4%BD%BF%E7%94%A8%E7%B6%B2%E7%B5%A1%E9%89%A4%E6%89%8B-Webhooks- |
-| DISCORD_USERNAME        | 机器人显示的名称                                             |
-| TELEGRAM_BOT_TOKEN      | 【推荐】Telegram Bot 机器人令牌。您可以从 https://t.me/BotFather 获取 Token。官方文档：https://core.telegram.org/bots/api#making-requests |
-| TELEGRAM_CHAT_ID        | 支持对话/群组/频道的 Chat ID。您可以转发消息到 https://t.me/JsonDumpBot 获取 Chat ID |
-| ONE_BOT_BASE_URL        | OneBot 推送。OneBot HTTP 基础路径。官方文档：https://github.com/botuniverse/onebot-11 |
-| ONE_BOT_ACCESS_TOKEN    | OneBot AccessToken                                           |
-| ONE_BOT_MSG_TYPE        | 消息类型                                                     |
-| ONE_BOT_RECIEVER_ID     | 用户/群组 ID，即 QQ 号或群号                                 |
+| 环境变量                  | 说明                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+| PORT                      | 运行端口                                                     |
+| AUTH_PUSH_KEY             | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
+| AUTH_FORWARD_KEY          | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
+| SERVER_CHAN_TURBO_SENDKEY | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/     |
+| SERVER_CHAN_V3_SENDKEY    | Server 酱³ 的 sendkey。官方文档：https://sc3.ft07.com/doc    |
+| EMAIL_AUTH_USER           | 自定义邮箱。发件邮箱                                         |
+| EMAIL_AUTH_PASS           | 发件授权码(或密码)                                           |
+| EMAIL_HOST                | 发件域名                                                     |
+| EMAIL_PORT                | 发件端口                                                     |
+| EMAIL_TO_ADDRESS          | 收件邮箱                                                     |
+| DINGTALK_ACCESS_TOKEN     | 【推荐】钉钉机器人 access_token。官方文档：https://developers.dingtalk.com/document/app/custom-robot-access |
+| DINGTALK_SECRET           | 钉钉机器人加签安全秘钥（HmacSHA256）                         |
+| WECHAT_ROBOT_KEY          | 企业微信群机器人。官方文档：https://work.weixin.qq.com/help?person_id=1&doc_id=13376 |
+| WECHAT_ROBOT_MSG_TYPE     | 消息类型，默认 `text`                                        |
+| WECHAT_APP_CORPID         | 【推荐】企业微信企业 ID，获取方式参考 https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid |
+| WECHAT_APP_AGENTID        | 企业应用的 id。企业内部开发，可在应用的设置页面查看          |
+| WECHAT_APP_SECRET         | 应用的凭证密钥，获取方式参考：https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/secret |
+| WECHAT_APP_USERID         | 指定接收消息的成员。若不指定则默认为 ”@all”。                |
+| PUSH_PLUS_TOKEN           | pushplus 推送加开放平台。官方文档：http://pushplus.hxtrip.com/doc/ |
+| PUSH_PLUS_TEMPLATE_TYPE   | 发送消息模板，默认为 html                                    |
+| PUSH_PLUS_CHANNEL_TYPE    | 发送渠道，默认为 wechat                                      |
+| I_GOT_KEY                 | iGot 推送，官方文档：https://wahao.github.io/Bark-MP-helper  |
+| QMSG_KEY                  | Qmsg 酱 推送，官方文档：https://qmsg.zendee.cn               |
+| XI_ZHI_KEY                | 息知 推送，官方文档：https://xz.qqoq.net/#/index             |
+| PUSH_DEER_PUSH_KEY        | 【推荐】PushDeer 推送，官方文档：https://github.com/easychen/pushdeer |
+| DISCORD_WEBHOOK           | 【推荐】Discord Webhook Url 可在服务器设置 -> 整合 -> Webhook -> 创建 Webhook 中获取。官方文档：https://support.discord.com/hc/zh-tw/articles/228383668-%E4%BD%BF%E7%94%A8%E7%B6%B2%E7%B5%A1%E9%89%A4%E6%89%8B-Webhooks- |
+| DISCORD_USERNAME          | 机器人显示的名称                                             |
+| TELEGRAM_BOT_TOKEN        | 【推荐】Telegram Bot 机器人令牌。您可以从 https://t.me/BotFather 获取 Token。官方文档：https://core.telegram.org/bots/api#making-requests |
+| TELEGRAM_CHAT_ID          | 支持对话/群组/频道的 Chat ID。您可以转发消息到 https://t.me/JsonDumpBot 获取 Chat ID |
+| ONE_BOT_BASE_URL          | OneBot 推送。OneBot HTTP 基础路径。官方文档：https://github.com/botuniverse/onebot-11 |
+| ONE_BOT_ACCESS_TOKEN      | OneBot AccessToken                                           |
+| ONE_BOT_MSG_TYPE          | 消息类型   'private' 或 'group'                              |
+| ONE_BOT_RECIEVER_ID       | 用户/群组 ID，即 QQ 号或群号                                 |
 
 ## 🛠️ 开发
 

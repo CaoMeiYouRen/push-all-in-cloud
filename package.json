@@ -1,6 +1,6 @@
 {
   "name": "push-all-in-cloud",
-  "version": "1.3.1",
+  "version": "2.0.0-beta.2",
   "description": "基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式",
   "author": "CaoMeiYouRen",
   "private": true,
@@ -57,7 +57,7 @@
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "hono": "^4.6.10",
-    "push-all-in-one": "^3.6.0",
+    "push-all-in-one": "4.0.0",
     "tslib": "^2.8.1",
     "tsx": "^4.19.2",
     "winston": "^3.17.0",
