@@ -23,6 +23,8 @@
 
 > 基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式
 
+**重大更新提示：** `push-all-in-cloud` v2 版本不兼容 v1 及以下低版本，请查看 [CHANGELOG](https://github.com/CaoMeiYouRen/push-all-in-one/blob/master/CHANGELOG.md) 了解改动。
+
 ## 🏠 主页
 
 [https://github.com/CaoMeiYouRen/push-all-in-cloud#readme](https://github.com/CaoMeiYouRen/push-all-in-cloud#readme)
