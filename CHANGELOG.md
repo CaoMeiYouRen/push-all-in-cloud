@@ -1,5 +1,17 @@
 # push-all-in-cloud
 
+# [2.0.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.3.1...v2.0.0) (2024-11-16)
+
+
+### ✨ 新功能
+
+* 修改 批量推送和转发推送的逻辑；修改环境变量配置 ([f8ae375](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/f8ae375))
+
+
+### 💥 BREAKING CHANGES
+
+* 升级 push-all-in-one 到 v4 版本
+
 # [2.0.0-beta.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-11-16)
 
 
