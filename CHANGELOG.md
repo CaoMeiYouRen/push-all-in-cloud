@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [1.3.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.3.0...v1.3.1) (2024-11-16)
+
+
+### 🐛 Bug 修复
+
+* 修复 outputDirectory 路径错误的问题 ([9ce17dc](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/9ce17dc))
+
 # [1.3.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.2.4...v1.3.0) (2024-10-06)
 
 

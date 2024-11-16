@@ -1,6 +1,6 @@
 {
   "name": "push-all-in-cloud",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "基于 push-all-in-one 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式",
   "author": "CaoMeiYouRen",
   "private": true,
