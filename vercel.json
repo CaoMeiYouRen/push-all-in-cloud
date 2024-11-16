@@ -12,7 +12,8 @@
     "functions": {
         "api/*.js": {
             "memory": 1024,
-            "maxDuration": 20
+            "maxDuration": 60
         }
-    }
+    },
+    "outputDirectory": "public"
 }
