@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.0.1-beta.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.0...v2.0.1-beta.1) (2024-11-17)
+
+
+### 🐛 Bug 修复
+
+* 升级 push-all-in-one 到 4.1.0-beta.1 ([e1ee360](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/e1ee360))
+
 # [2.0.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v1.3.1...v2.0.0) (2024-11-16)
 
 
