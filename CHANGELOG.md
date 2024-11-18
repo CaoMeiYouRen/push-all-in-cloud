@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.1.0-beta.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.1-beta.1...v2.1.0-beta.1) (2024-11-18)
+
+
+### ✨ 新功能
+
+* 新增 push-all-in-one 配置生成器 ([1c0f8c8](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/1c0f8c8))
+
 ## [2.0.1-beta.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.0...v2.0.1-beta.1) (2024-11-17)
 
 
