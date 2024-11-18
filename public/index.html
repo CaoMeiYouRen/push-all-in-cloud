@@ -24,8 +24,25 @@
 
 <body>
     <div id="app">
-        <p>push-all-in-one 和 push-all-in-cloud 通用配置生成器</p>
-        <el-tabs v-model="type" class="demo-tabs">
+        <p><a href="https://github.com/CaoMeiYouRen/push-all-in-one" target="_blank">push-all-in-one</a> 和
+            <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud" target="_blank">push-all-in-cloud</a> 通用配置生成器
+        </p>
+        <div class="demo-collapse">
+            <el-collapse v-model="activeName">
+                <!-- <el-collapse-item title="推送KEY" name="AUTH_PUSH_KEY">
+                    <el-input v-model="input" style="width: 240px" placeholder="Please input" />
+                </el-collapse-item> -->
+                <el-collapse-item title="转发 KEY 配置(AUTH_FORWARD_KEY)" name="AUTH_FORWARD_KEY">
+                    <el-input v-model="AUTH_FORWARD_KEY" style="width: 50%;"
+                        placeholder="访问 /forward 路由，执行转发推送需要的 key，即环境变量中的 AUTH_FORWARD_KEY 字段"></el-input>
+                </el-collapse-item>
+                <el-collapse-item title="测试推送的标题和正文" name="TEST_PUSH_TITLE">
+                    <el-input v-model="title" style="width: 50%;" placeholder="请输入测试推送的标题"></el-input><br /><br />
+                    <el-input v-model="desp" style="width: 50%;" placeholder="请输入测试推送的正文" type="textarea"></el-input>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
+        <el-tabs v-model="type" class="demo-tabs" @tab-change="tabChange">
             <template v-for="item in options">
                 <el-tab-pane :label="item.namespace" :name="item.name">
                     <div style="display: flex;">
@@ -45,25 +62,21 @@
                                 <div style="display: flex; justify-content: space-between;">
                                     <p>构造函数配置项</p>
                                     <span style="margin-top: 11px;">
-                                        <el-button type="primary"
-                                            @click="copyText(JSON.stringify(configValues[item.name] || {}, null, 4))">复制
+                                        <el-button type="primary" @click="copyText(getConfigValue(item.name))">复制
                                         </el-button>
                                     </span>
                                 </div>
-                                <highlightjs language="javascript"
-                                    :code="JSON.stringify(configValues[item.name] || {}, null, 4)" />
+                                <highlightjs language="javascript" :code="getConfigValue(item.name)" />
                             </div>
                             <div>
                                 <div style="display: flex; justify-content: space-between;">
-                                    <p>附加参数选项</p>
+                                    <p>附加参数选项(注意：附加参数为空的时候不要设置，否则会覆盖默认配置)</p>
                                     <span style="margin-top: 11px;">
-                                        <el-button type="primary"
-                                            @click="copyText(JSON.stringify(optionValues[item.name] || {}, null, 4))">复制
+                                        <el-button type="primary" @click="copyText(getOptionValue(item.name))">复制
                                         </el-button>
                                     </span>
                                 </div>
-                                <highlightjs language="javascript"
-                                    :code="JSON.stringify(optionValues[item.name] || {}, null, 4)" />
+                                <highlightjs language="javascript" :code="getOptionValue(item.name)" />
                             </div>
                             <div>
                                 <div style="display: flex; justify-content: space-between;">
@@ -121,11 +134,16 @@
         const app = createApp({
             data() {
                 return {
+                    activeName: 'AUTH_FORWARD_KEY',
                     type: '',
                     configValues: {},
                     optionValues: {},
                     options: {},
-                    response: {}
+                    response: {},
+                    AUTH_PUSH_KEY: '',
+                    AUTH_FORWARD_KEY: '',
+                    title: 'PushAllInOne 测试推送标题',
+                    desp: 'PushAllInOne 测试推送正文'
                 };
             },
             methods: {
@@ -139,10 +157,10 @@
                 async postForward(form, done) {
                     try {
                         const type = this.type
-                        const title = 'PushAllInOne 测试推送'
-                        const desp = 'PushAllInOne 测试推送 - ' + this.options[type]?.namespace
-                        const config = this.configValues[type] || {}
-                        const option = this.optionValues[type] || {}
+                        const title = this.title
+                        const desp = this.desp
+                        const config = JSON.parse(this.getConfigValue(type))
+                        const option = JSON.parse(this.getOptionValue(type))
                         const res = await postForward({ title, desp, type, config, option });
                         console.log(res)
                         this.response = res
@@ -153,6 +171,22 @@
                     } finally {
                         done()
                     }
+                },
+                getConfigValue(type) {
+                    return JSON.stringify(this.configValues[type] || {}, null, 4)
+                },
+                getOptionValue(type) {
+                    const option = this.optionValues[type] || {}
+                    // 去除所有空字符串、null、undefined 的字段，否则会覆盖默认配置；$ 开头的字段为 Avue 内置字段，不需要展示在配置中
+                    Object.keys(option).forEach(key => {
+                        if (option[key] === '' || option[key] === null || option[key] === undefined || key.startsWith('$')) {
+                            delete option[key]
+                        }
+                    })
+                    return JSON.stringify(option, null, 4)
+                },
+                tabChange(name) {
+                    this.desp = 'PushAllInOne 测试推送 - ' + this.options[name]?.namespace
                 }
             },
             mounted() {
