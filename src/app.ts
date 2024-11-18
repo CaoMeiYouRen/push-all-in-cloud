@@ -11,6 +11,7 @@ import { MetaPushConfig, PushType } from 'push-all-in-one'
 import { batchPushAllInOne, runPushAllInOne } from './utils/push'
 import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
 import { winstonLogger } from './utils/logger'
+import { pushAllInOneSchema } from './client'
 
 const app = new Hono()
 
@@ -38,9 +39,9 @@ app.onError((error, c) => {
     })
 })
 
-app.all('/', (c) => c.json({
-    message: 'Hello PushAllInCloud!',
-}))
+// app.all('/', (c) => c.json({
+//     message: 'Hello PushAllInCloud!',
+// }))
 
 type PushBody = {
     title: string
@@ -71,5 +72,12 @@ app.post('/forward', AUTH_FORWARD_KEY && bearerAuth({ token: AUTH_FORWARD_KEY })
         },
     })
 })
+
+app.get('/option', (c) => c.json({
+        message: 'OK',
+        data: {
+            option: pushAllInOneSchema,
+        },
+    }))
 
 export default app

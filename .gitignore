@@ -40,3 +40,5 @@ logs
 .vercel
 .dev.vars
 .wrangler
+public/index.js
+public/index.global.js

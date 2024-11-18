@@ -41,5 +41,18 @@ const option: Options = {
     // external: [],
     // noExternal: [/(.*)/], // 将依赖打包到一个文件中
     // bundle: true,
+    // {
+    //     ...option,
+    //     globalName: 'PushAllInClient',
+    //     platform: 'node',
+    //     entry: ['src/client/index.ts'],
+    //     format: ['esm'],
+    //     outDir: 'public', // 输出到 public 目录
+    //     sourcemap: false, // 不生成 sourcemap 文件
+    //     treeshake: true, // 摇树优化
+    //     clean: false,
+    //     minify: false, // 代码压缩
+    //     // noExternal: [/(.*)/],
+    // }
 }
 export default defineConfig([option])
