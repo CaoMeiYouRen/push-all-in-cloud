@@ -42,8 +42,8 @@ export function convertToAvueOption<T extends ConfigSchema>(schema: T, name: str
         }
     }
     avueOption.title = name
-    // avueOption.submitText = '推送'
-    avueOption.submitBtn = false
+    avueOption.submitText = '推送'
+    // avueOption.submitBtn = false
     return avueOption
 }
 

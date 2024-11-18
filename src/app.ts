@@ -47,7 +47,12 @@ type PushBody = {
     title: string
     desp?: string
 }
-app.post('/push', AUTH_PUSH_KEY && bearerAuth({ token: AUTH_PUSH_KEY }), async (c) => {
+app.post('/push', (c, next) => {
+    if (AUTH_PUSH_KEY) {
+        return bearerAuth({ token: AUTH_PUSH_KEY })(c, next)
+    }
+    return next()
+}, async (c) => {
     const { title, desp } = await c.req.json<PushBody>()
     const envValue = env(c) as Record<string, string>
     const data = await batchPushAllInOne(title, desp, envValue)
@@ -62,22 +67,27 @@ type ForwardBody = {
     desp?: string
 } & MetaPushConfig<PushType>
 
-app.post('/forward', AUTH_FORWARD_KEY && bearerAuth({ token: AUTH_FORWARD_KEY }), async (c) => {
+app.post('/forward', (c, next) => {
+    if (AUTH_FORWARD_KEY) {
+        return bearerAuth({ token: AUTH_FORWARD_KEY })(c, next)
+    }
+    return next()
+}, async (c) => {
     const { title, desp, type, config, option } = await c.req.json<ForwardBody>()
-    const { data, status, statusText } = await runPushAllInOne(title, desp, { type, config, option })
+    const { data, status, statusText, headers } = await runPushAllInOne(title, desp, { type, config, option })
     return c.json({
         message: 'OK',
         data: {
-            data, headers: {}, status, statusText,
+            data, headers, status, statusText,
         },
     })
 })
 
 app.get('/option', (c) => c.json({
-        message: 'OK',
-        data: {
-            option: pushAllInOneSchema,
-        },
-    }))
+    message: 'OK',
+    data: {
+        option: pushAllInOneSchema,
+    },
+}))
 
 export default app
