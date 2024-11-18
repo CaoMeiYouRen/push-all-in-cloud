@@ -21,6 +21,7 @@
 
 
 
+
 > 基于 [push-all-in-one](https://github.com/CaoMeiYouRen/push-all-in-one) 和 hono 开发的云函数推送服务。支持 nodejs/docker/vercel 等部署方式
 
 **重大更新提示：** `push-all-in-cloud` v2 版本不兼容 v1 及以下低版本，请查看 [CHANGELOG](https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/CHANGELOG.md) 了解改动。
@@ -28,6 +29,12 @@
 ## 🏠 主页
 
 [https://github.com/CaoMeiYouRen/push-all-in-cloud#readme](https://github.com/CaoMeiYouRen/push-all-in-cloud#readme)
+
+## 🌰 Demo
+
+https://push.cmyr.dev
+
+主页自带 push-all-in-one 和 push-all-in-cloud 通用配置生成器，提供在线调试功能。
 
 
 ## 📦 依赖要求
@@ -80,7 +87,6 @@ vim docker-compose.yml  # 也可以是你喜欢的编辑器
 ```
 
 > 在公网部署时请务必修改 AUTH_PUSH_KEY、AUTH_FORWARD_KEY 环境变量
->
 
 启动
 
@@ -125,6 +131,7 @@ pnpm start
 | /push    | POST     | application/json | PushBody    | PushResponse    | 将消息推送到服务端配置的多个推送渠道。使用本方式需要配置环境变量 |
 | /forward | POST     | application/json | ForwardBody | ForwardResponse | 将消息转发到目标推送渠道。使用本方式无需配置环境变量，但需要在推送时设置推送渠道 |
 
+
 ```ts
 type PushBody = {
     title: string
@@ -149,6 +156,7 @@ type ForwardResponse = {
     data: Pick<AxiosResponse<any>, 'data' | 'headers' | 'status' | 'statusText'>
 }
 ```
+
 
 ### /push 接口调用例子
 
@@ -176,6 +184,8 @@ fetch(url, {
 ```
 
 ### /forward 接口调用例子
+
+提示：可以前往 [push-all-in-cloud 配置生成器](https://push.cmyr.dev/) 在线生成 push-all-in-one 和 push-all-in-cloud 通用配置。
 
 ```ts
 const url = 'http://your-server-address/forward'; // 请将 http://your-server-address 替换为真实地址！
@@ -290,4 +300,5 @@ Copyright © 2024 [CaoMeiYouRen](https://github.com/CaoMeiYouRen).<br />
 This project is [AGPL-3.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/blob/master/LICENSE) licensed.
 
 ***
+
 _This README was generated with ❤️ by [cmyr-template-cli](https://github.com/CaoMeiYouRen/cmyr-template-cli)_
