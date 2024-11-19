@@ -29,9 +29,6 @@
         </p>
         <div class="demo-collapse">
             <el-collapse v-model="activeName">
-                <!-- <el-collapse-item title="推送KEY" name="AUTH_PUSH_KEY">
-                    <el-input v-model="input" style="width: 240px" placeholder="Please input" />
-                </el-collapse-item> -->
                 <el-collapse-item title="转发 KEY 配置(AUTH_FORWARD_KEY)" name="AUTH_FORWARD_KEY">
                     <el-input v-model="AUTH_FORWARD_KEY" style="width: 50%;"
                         placeholder="访问 /forward 路由，执行转发推送需要的 key，即环境变量中的 AUTH_FORWARD_KEY 字段"></el-input>
@@ -93,40 +90,24 @@
 
     <script>
         const { ElMessage } = ElementPlus
-        async function getOption() {
-            return (await (await fetch('/option')).json())?.data?.option || {};
-        }
+        const API_ENDPOINTS = {
+            OPTION: '/option',
+            FORWARD: '/forward'
+        };
 
-        async function postForward(data, token) {
-            const { title, desp, type, config, option } = data
-            return (await (await fetch('/forward', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify({
-                    title,
-                    desp,
-                    type,
-                    config,
-                    option
-                })
-            }).then(res => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(res)// reject promise if HTTP error
-            })))?.data || {};
+        async function fetchData(endpoint, options = {}) {
+            const response = await fetch(endpoint, options);
+            if (!response.ok) {
+                return Promise.reject(response);
+            }
+            return response.json();
         }
 
         function copyText(text) {
-            AVUE.$Clipboard({
-                text
-            }).then(() => {
-                ElMessage.success('复制成功')
+            navigator.clipboard.writeText(text).then(() => {
+                ElMessage.success('复制成功');
             }).catch(() => {
-                ElMessage.error('复制失败')
+                ElMessage.error('复制失败');
             });
         }
 
@@ -147,57 +128,66 @@
                     desp: 'PushAllInOne 测试推送正文'
                 };
             },
+            computed: {
+                currentNamespace() {
+                    return this.options[this.type]?.namespace || '';
+                }
+            },
             methods: {
                 async getOption() {
-                    const option = await getOption();
-                    // console.log(option)
+                    const { data: { option } } = await fetchData(API_ENDPOINTS.OPTION);
                     this.options = option;
                     this.type = Object.keys(option)?.[0];
                 },
                 copyText,
                 async postForward(form, done) {
                     try {
-                        const type = this.type
-                        const title = this.title
-                        const desp = this.desp
-                        const config = JSON.parse(this.getConfigValue(type))
-                        const option = JSON.parse(this.getOptionValue(type))
-                        const res = await postForward({ title, desp, type, config, option }, this.AUTH_FORWARD_KEY);
-                        console.log(res)
-                        this.response = res
-                        ElMessage.success('推送成功')
+                        const type = this.type;
+                        const title = this.title;
+                        const desp = this.desp;
+                        const config = JSON.parse(this.getConfigValue(type));
+                        const option = JSON.parse(this.getOptionValue(type));
+                        const res = await fetchData(API_ENDPOINTS.FORWARD, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + this.AUTH_FORWARD_KEY
+                            },
+                            body: JSON.stringify({ title, desp, type, config, option })
+                        });
+                        this.response = res.data;
+                        ElMessage.success('推送成功');
                     } catch (error) {
-                        console.error(error)
-                        ElMessage.error('推送失败')
+                        console.error(error);
+                        ElMessage.error('推送失败');
                     } finally {
-                        done()
+                        done();
                     }
                 },
                 getConfigValue(type) {
-                    return JSON.stringify(this.configValues[type] || {}, null, 4)
+                    return JSON.stringify(this.configValues[type] || {}, null, 4);
                 },
                 getOptionValue(type) {
-                    const option = { ...this.optionValues[type] } || {}
-                    // 去除所有空字符串、null、undefined 的字段，否则会覆盖默认配置；$ 开头的字段为 Avue 内置字段，不需要展示在配置中
-                    Object.keys(option).forEach(key => {
-                        if (option[key] === '' || option[key] === null || option[key] === undefined || key.startsWith('$')) {
-                            delete option[key]
+                    const option = { ...this.optionValues[type] } || {};
+                    const filteredOption = Object.keys(option).reduce((acc, key) => {
+                        if (!(option[key] === '' || option[key] === null || option[key] === undefined || key.startsWith('$'))) {
+                            acc[key] = option[key];
                         }
-                    })
-                    return JSON.stringify(option, null, 4)
+                        return acc;
+                    }, {});
+                    return JSON.stringify(filteredOption, null, 4);
                 },
                 tabChange(name) {
-                    this.desp = 'PushAllInOne 测试推送 - ' + this.options[name]?.namespace
+                    this.desp = 'PushAllInOne 测试推送 - ' + this.currentNamespace;
                 }
             },
             mounted() {
-                this.getOption()
+                this.getOption();
             },
         });
-        app.use(ElementPlus)
-        // 使用Avue插件
+        app.use(ElementPlus);
         app.use(AVUE);
-        app.use(hljsVuePlugin)
+        app.use(hljsVuePlugin);
         app.mount('#app');
     </script>
 </body>
