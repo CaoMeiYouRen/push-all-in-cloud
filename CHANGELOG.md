@@ -1,5 +1,20 @@
 # push-all-in-cloud
 
+# [2.1.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.0...v2.1.0) (2024-11-19)
+
+
+### ✨ 新功能
+
+* 新增 push-all-in-one 配置生成器 ([1c0f8c8](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/1c0f8c8))
+
+
+### 🐛 Bug 修复
+
+* 优化 配置页功能；修复 空字符串的附加参数会覆盖默认参数的问题 ([8ad320b](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/8ad320b))
+* 修复 AUTH_PUSH_KEY 和 AUTH_FORWARD_KEY 为空时无法推送的问题；增加推送测试按钮 ([632577c](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/632577c))
+* 修复 postForward 未设置 AUTH_FORWARD_KEY 的问题 ([47e0cd1](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/47e0cd1))
+* 升级 push-all-in-one 到 4.1.0-beta.1 ([e1ee360](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/e1ee360))
+
 # [2.1.0-beta.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-11-19)
 
 
