@@ -1,5 +1,17 @@
 # push-all-in-cloud
 
+## [2.1.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.2...v2.1.3) (2024-11-19)
+
+
+### ⏪ 回退
+
+* 暂时移除 secureHeaders ([ab7e58b](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/ab7e58b))
+
+
+### 🐛 Bug 修复
+
+* 调整超时时间配置；优化路由处理逻辑 ([9675e1a](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/9675e1a))
+
 ## [2.1.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.1...v2.1.2) (2024-11-19)
 
 
