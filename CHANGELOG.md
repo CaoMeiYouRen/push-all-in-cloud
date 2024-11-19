@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.1.4](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.3...v2.1.4) (2024-11-19)
+
+
+### 🐛 Bug 修复
+
+* 修复 `await c.req.json()` 无法获取数据的问题，新增 `getBodyByReq` 函数处理请求体解析 ([5c70e47](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/5c70e47))
+
 ## [2.1.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.2...v2.1.3) (2024-11-19)
 
 
