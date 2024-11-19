@@ -34,7 +34,7 @@ const option: Options = {
     clean: true,
     dts: false,
     minify: false, // 缩小输出
-    treeshake: true,
+    // treeshake: true,
     shims: true, // 注入 cjs 和 esm 填充代码，解决 import.meta.url 和 __dirname 的兼容问题
     esbuildOptions(options, context) {
         options.charset = 'utf8'
@@ -42,18 +42,8 @@ const option: Options = {
     // external: [],
     // noExternal: [/(.*)/], // 将依赖打包到一个文件中
     // bundle: true,
-    // {
-    //     ...option,
-    //     globalName: 'PushAllInClient',
-    //     platform: 'node',
-    //     entry: ['src/client/index.ts'],
-    //     format: ['esm'],
-    //     outDir: 'public', // 输出到 public 目录
-    //     sourcemap: false, // 不生成 sourcemap 文件
-    //     treeshake: true, // 摇树优化
-    //     clean: false,
-    //     minify: false, // 代码压缩
-    //     // noExternal: [/(.*)/],
-    // }
+    env: {
+        NODE_ENV: 'production',
+    },
 }
 export default defineConfig([option])

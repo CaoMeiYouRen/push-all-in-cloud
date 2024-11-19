@@ -150,7 +150,6 @@
                         const res = await fetchData(API_ENDPOINTS.FORWARD, {
                             method: 'POST',
                             headers: {
-                                // 'Accept-Encoding': null,
                                 'Content-Type': 'application/json',
                                 'Authorization': this.AUTH_FORWARD_KEY ? ('Bearer ' + this.AUTH_FORWARD_KEY) : '',
                             },
