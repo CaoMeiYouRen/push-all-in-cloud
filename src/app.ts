@@ -18,7 +18,7 @@ const app = new Hono()
 app.use(logger())
 app.use(timeout(TIMEOUT))
 app.use(cors())
-app.use(secureHeaders())
+// app.use(secureHeaders())
 
 app.onError((error, c) => {
     const message = process.env.NODE_ENV === 'production' ? `${error.name}: ${error.message}` : error.stack
