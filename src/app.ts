@@ -18,7 +18,7 @@ const app = new Hono()
 app.use(logger())
 app.use(timeout(TIMEOUT))
 app.use(cors())
-// app.use(secureHeaders())
+app.use(secureHeaders({}))
 
 app.onError((error, c) => {
     const message = process.env.NODE_ENV === 'production' ? `${error.name}: ${error.message}` : error.stack
@@ -47,13 +47,13 @@ type PushBody = {
     title: string
     desp?: string
 }
-app.post('/push', (c, next) => {
+app.post('/push', async (c, next) => {
     if (AUTH_PUSH_KEY) {
         return bearerAuth({ token: AUTH_PUSH_KEY })(c, next)
     }
     return next()
 }, async (c) => {
-    const { title, desp } = await c.req.json<PushBody>()
+    const { title, desp } = await c.req.json<PushBody>() || {}
     const envValue = env(c) as Record<string, string>
     const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
@@ -67,18 +67,18 @@ type ForwardBody = {
     desp?: string
 } & MetaPushConfig<PushType>
 
-app.post('/forward', (c, next) => {
+app.post('/forward', async (c, next) => {
     if (AUTH_FORWARD_KEY) {
         return bearerAuth({ token: AUTH_FORWARD_KEY })(c, next)
     }
-    return next()
+    await next()
 }, async (c) => {
-    const { title, desp, type, config, option } = await c.req.json<ForwardBody>()
+    const { title, desp, type, config, option } = await c.req.json<ForwardBody>() || {}
     const { data, status, statusText, headers } = await runPushAllInOne(title, desp, { type, config, option })
     return c.json({
         message: 'OK',
         data: {
-            data, headers, status, statusText,
+            data, headers: {}, status, statusText,
         },
     })
 })

@@ -3,6 +3,7 @@ import {
     PushAllInOne,
 } from 'push-all-in-one' // 假设你的类型定义在这个文件中
 import { Option as AvueOption, Column as AvueColumn } from '@cao-mei-you-ren/avue-types'
+import { getRuntimeKey } from 'hono/adapter'
 /**
  * 将 ConfigSchema 转换为 Avue 表单的 option
  * @param schema 符合 ConfigSchema 的 Schema
@@ -44,7 +45,9 @@ export function convertToAvueOption<T extends ConfigSchema>(schema: T, name: str
     }
     avueOption.title = name
     avueOption.submitText = '推送'
-    // avueOption.submitBtn = false
+    if (getRuntimeKey() === 'edge-light') {
+        avueOption.submitBtn = false
+    }
     return avueOption
 }
 

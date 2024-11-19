@@ -150,10 +150,11 @@
                         const res = await fetchData(API_ENDPOINTS.FORWARD, {
                             method: 'POST',
                             headers: {
+                                // 'Accept-Encoding': null,
                                 'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + this.AUTH_FORWARD_KEY
+                                'Authorization': this.AUTH_FORWARD_KEY ? ('Bearer ' + this.AUTH_FORWARD_KEY) : '',
                             },
-                            body: JSON.stringify({ title, desp, type, config, option })
+                            body: JSON.stringify({ title, desp, type, config, option }),
                         });
                         this.response = res.data;
                         ElMessage.success('推送成功');
