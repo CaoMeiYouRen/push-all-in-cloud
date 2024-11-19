@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>push-all-in-cloud 配置生成器</title>
     <!--  引入Vue 3的CDN -->
-    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-plus@2.8.8/dist/index.css" />
     <!-- 引入Element Plus的CDN -->
     <script src="https://unpkg.com/element-plus@2.8.8/dist/index.full.min.js"></script>
@@ -177,7 +177,7 @@
                     return JSON.stringify(this.configValues[type] || {}, null, 4)
                 },
                 getOptionValue(type) {
-                    const option = this.optionValues[type] || {}
+                    const option = { ...this.optionValues[type] } || {}
                     // 去除所有空字符串、null、undefined 的字段，否则会覆盖默认配置；$ 开头的字段为 Avue 内置字段，不需要展示在配置中
                     Object.keys(option).forEach(key => {
                         if (option[key] === '' || option[key] === null || option[key] === undefined || key.startsWith('$')) {
