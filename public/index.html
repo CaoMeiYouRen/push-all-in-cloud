@@ -97,12 +97,13 @@
             return (await (await fetch('/option')).json())?.data?.option || {};
         }
 
-        async function postForward(data) {
+        async function postForward(data, token) {
             const { title, desp, type, config, option } = data
             return (await (await fetch('/forward', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify({
                     title,
@@ -161,7 +162,7 @@
                         const desp = this.desp
                         const config = JSON.parse(this.getConfigValue(type))
                         const option = JSON.parse(this.getOptionValue(type))
-                        const res = await postForward({ title, desp, type, config, option });
+                        const res = await postForward({ title, desp, type, config, option }, this.AUTH_FORWARD_KEY);
                         console.log(res)
                         this.response = res
                         ElMessage.success('推送成功')
