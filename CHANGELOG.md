@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.1.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.1...v2.1.2) (2024-11-19)
+
+
+### 🐛 Bug 修复
+
+* 在表单字段中添加提示信息，使用字段的描述作为提示内容 ([17647fa](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/17647fa))
+
 ## [2.1.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.0...v2.1.1) (2024-11-19)
 
 
