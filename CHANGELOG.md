@@ -1,5 +1,17 @@
 # push-all-in-cloud
 
+## [2.1.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.0...v2.1.1) (2024-11-19)
+
+
+### ♻ 代码重构
+
+* 优化代码结构和命名 ([4b4058b](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/4b4058b))
+
+
+### 🐛 Bug 修复
+
+* 更新 Vue CDN 链接并优化配置选项获取 ([38b585f](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/38b585f))
+
 # [2.1.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.0.0...v2.1.0) (2024-11-19)
 
 
