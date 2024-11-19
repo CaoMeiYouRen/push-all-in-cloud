@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.1.0-beta.3](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.0-beta.2...v2.1.0-beta.3) (2024-11-19)
+
+
+### 🐛 Bug 修复
+
+* 修复 postForward 未设置 AUTH_FORWARD_KEY 的问题 ([47e0cd1](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/47e0cd1))
+
 # [2.1.0-beta.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2024-11-18)
 
 
