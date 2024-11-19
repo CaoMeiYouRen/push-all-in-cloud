@@ -24,6 +24,7 @@ export function convertToAvueOption<T extends ConfigSchema>(schema: T, name: str
                 span: 24,
                 rules: field.required ? [{ required: true, message: `请输入${field.title || key}`, trigger: 'blur' }] : [],
                 value: field.default,
+                tip: field.description,
             }
 
             if (field.type === 'select') {
