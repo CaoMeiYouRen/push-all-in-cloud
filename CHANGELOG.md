@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.2.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.5...v2.2.0) (2024-11-20)
+
+
+### ✨ 新功能
+
+* **env:** 添加新的推送配置项；支持 PushDeer 推送端点配置 ([39ca07d](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/39ca07d))
+
 ## [2.1.5](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.4...v2.1.5) (2024-11-20)
 
 
