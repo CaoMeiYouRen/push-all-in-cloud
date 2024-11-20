@@ -149,6 +149,7 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         // 【推荐】PushDeer 推送，官方文档：https://github.com/easychen/pushdeer
         const pushDeer = new PushDeer({
             PUSH_DEER_PUSH_KEY: env.PUSH_DEER_PUSH_KEY,
+            PUSH_DEER_ENDPOINT: env.PUSH_DEER_ENDPOINT,
         })
         pushs.push(pushDeer.send(title, desp, {
             type: env.PUSH_DEER_PUSH_TYPE as PushDeerPushType || 'markdown',
