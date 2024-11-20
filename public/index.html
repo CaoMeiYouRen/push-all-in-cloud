@@ -44,7 +44,7 @@
                 <el-tab-pane :label="item.namespace" :name="item.name">
                     <div style="display: flex;">
                         <div style="width: 50%; padding-right: 20px;">
-                            <label>{{item.namespace}}</label>
+                            <label>type: {{item.name}}</label>
                             <p>构造函数配置项</p>
                             <avue-form :option="item.avueConfig" v-model="configValues[item.name]"
                                 @submit="postForward"></avue-form>

@@ -47,7 +47,9 @@ https://push.cmyr.dev
 
 ### Vercel 部署（推荐）
 
-点击以下按钮一键部署到 Vercel。
+> 如果遇到了点击 `推送` 按钮长时间无响应/超时的问题，请在 Vercel 控制台中将环境变量`NODEJS_HELPERS`设置为 `0` 后，重新部署，再进行测试。
+
+ 点击以下按钮一键部署到 Vercel。
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCaoMeiYouRen%2Fpush-all-in-cloud.git)
 
@@ -195,11 +197,11 @@ const payload = {
     title: '测试推送标题',
     desp: '这是测试推送的内容',
     type: 'Telegram', // 选择推送渠道，例如 Telegram
-    config: {
+    config: { // 构造函数配置项。如果不知道怎么填，请前往 'push-all-in-cloud 配置生成器' 查看
         TELEGRAM_BOT_TOKEN: 'your-telegram-bot-token',
         TELEGRAM_CHAT_ID: 'your-telegram-chat-id'
     },
-    option: {}
+    option: {} // 附加参数选项。如果不知道怎么填，请前往 'push-all-in-cloud 配置生成器' 查看
 };
 
 fetch(url, {
