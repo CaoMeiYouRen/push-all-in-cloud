@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.1.5](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.4...v2.1.5) (2024-11-20)
+
+
+### 🐛 Bug 修复
+
+* **app:** 修复请求体解析问题 ([c1e7c5f](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/c1e7c5f))
+
 ## [2.1.4](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.3...v2.1.4) (2024-11-19)
 
 
