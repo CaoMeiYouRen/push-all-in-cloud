@@ -53,8 +53,7 @@ app.post('/push', async (c, next) => {
     }
     return next()
 }, async (c) => {
-    // const { title, desp } = await c.req.json<PushBody>() || {}
-    const { title, desp } = (await getBodyByReq(c.req.raw) || {}) as PushBody
+    const { title, desp } = await c.req.json<PushBody>() || {}
     const envValue = env(c) as Record<string, string>
     const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
@@ -74,7 +73,7 @@ app.post('/forward', async (c, next) => {
     }
     await next()
 }, async (c) => {
-    const { title, desp, type, config, option } = (await getBodyByReq(c.req.raw) || {}) as ForwardBody
+    const { title, desp, type, config, option } = await c.req.json<ForwardBody>() || {}
     const { data, status, statusText, headers } = await runPushAllInOne(title, desp, { type, config, option })
     return c.json({
         message: 'OK',
@@ -90,39 +89,5 @@ app.get('/option', (c) => c.json({
         option: pushAllInOneSchema,
     },
 }))
-
-/**
- * 从 Request 中获取 body。由于 reader.read() 只能读取一次，第二次读取的时候没有任何响应，所以在第一次读取的时候就直接结束掉。
- * 这个 bug 导致 await c.req.json() 无法获取到数据。
- *
- * @author CaoMeiYouRen
- * @date 2024-11-20
- * @param req
- */
-async function getBodyByReq(req: Request) {
-    const reader = req.body.getReader()
-    let result = ''
-    const { value } = await reader.read()// 只能读取一次
-    result += new TextDecoder('utf-8').decode(value, { stream: true })
-    winstonLogger.info('Raw request body: %s', result)
-    return JSON.parse(result)
-}
-
-// app.post('/test', async (c) => {
-//     try {
-//         return c.json({
-//             message: 'OK',
-//             runtimeKey: getRuntimeKey(),
-//             headers: c.req.header(),
-//             body: await getBodyByReq(c.req.raw),
-//         })
-//     } catch (error) {
-//         winstonLogger.error('Test error: %O', { error })
-//         return c.json({
-//             message: 'Error',
-//             error: error.message,
-//         }, 500)
-//     }
-// })
 
 export default app
