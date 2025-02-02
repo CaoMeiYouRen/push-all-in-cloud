@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.13.7
-        version: 1.13.7(hono@4.6.19)
+        version: 1.13.7(hono@4.6.20)
       axios:
         specifier: ^1.7.9
         version: 1.7.9(debug@4.4.0)
@@ -18,8 +18,8 @@ importers:
         specifier: ^16.4.7
         version: 16.4.7
       hono:
-        specifier: ^4.6.19
-        version: 4.6.19
+        specifier: ^4.6.20
+        version: 4.6.20
       push-all-in-one:
         specifier: 4.1.1
         version: 4.1.1
@@ -3062,8 +3062,8 @@ packages:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
 
-  hono@4.6.19:
-    resolution: {integrity: sha512-Xw5DwU2cewEsQ1DkDCdy6aBJkEBARl5loovoL1gL3/gw81RdaPbXrNJYp3LoQpzpJ7ECC/1OFi/vn3UZTLHFEw==}
+  hono@4.6.20:
+    resolution: {integrity: sha512-5qfNQeaIptMaJKyoJ6N/q4gIq0DBp2FCRaLNuUI3LlJKL4S37DY/rLL1uAxA4wrPB39tJ3s+f7kgI79O4ScSug==}
     engines: {node: '>=16.9.0'}
 
   hook-std@3.0.0:
@@ -6380,9 +6380,9 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@hono/node-server@1.13.7(hono@4.6.19)':
+  '@hono/node-server@1.13.7(hono@4.6.20)':
     dependencies:
-      hono: 4.6.19
+      hono: 4.6.20
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
@@ -8993,7 +8993,7 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hono@4.6.19: {}
+  hono@4.6.20: {}
 
   hook-std@3.0.0: {}
 
