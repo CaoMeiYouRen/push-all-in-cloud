@@ -239,6 +239,11 @@ fetch(url, {
 | WECHAT_APP_AGENTID        | 企业应用的 id。企业内部开发，可在应用的设置页面查看          |
 | WECHAT_APP_SECRET         | 应用的凭证密钥，获取方式参考：https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/secret |
 | WECHAT_APP_USERID         | 指定接收消息的成员。若不指定则默认为 ”@all”。                |
+| FEISHU_APP_ID             | 飞书应用 ID。官方文档：https://open.feishu.cn/document/home/index |
+| FEISHU_APP_SECRET         | 飞书应用 Secret                                              |
+| FEISHU_RECEIVE_ID         | 飞书消息接收者的 ID，ID 类型与查询参数 `receive_id_type` 的取值一致。 |
+| FEISHU_RECEIVE_ID_TYPE    | 飞书用户 ID 类型                                             |
+| FEISHU_MSG_TYPE           | 飞书消息类型。                                               |
 | PUSH_PLUS_TOKEN           | pushplus 推送加开放平台。官方文档：http://pushplus.hxtrip.com/doc/ |
 | PUSH_PLUS_TEMPLATE_TYPE   | 发送消息模板，默认为 html                                    |
 | PUSH_PLUS_CHANNEL_TYPE    | 发送渠道，默认为 wechat                                      |

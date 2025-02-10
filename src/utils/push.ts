@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType } from 'push-all-in-one'
+import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType, Feishu } from 'push-all-in-one'
 import logger from './logger'
 
 const warn = (text: string) => logger.warn(text)
@@ -93,6 +93,19 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         info('企业微信应用推送 已加入推送队列')
     } else {
         info('未配置 企业微信应用推送，已跳过')
+    }
+
+    if (env.FEISHU_APP_ID && env.FEISHU_APP_SECRET && env.FEISHU_RECEIVE_ID) {
+        // 飞书应用推送，官方文档：https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot
+        const feishu = new Feishu({
+            FEISHU_APP_ID: env.FEISHU_APP_ID,
+            FEISHU_APP_SECRET: env.FEISHU_APP_SECRET,
+        })
+        pushs.push(feishu.send(title, desp, {
+            receive_id_type: env.FEISHU_RECEIVE_ID_TYPE as any || 'open_id',
+            receive_id: env.FEISHU_RECEIVE_ID,
+            msg_type: env.FEISHU_MSG_TYPE as any || 'text',
+        }))
     }
 
     if (env.PUSH_PLUS_TOKEN) {
