@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.3.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.2.0...v2.3.0) (2025-02-10)
+
+
+### ✨ 新功能
+
+* 添加飞书推送支持，更新依赖版本 ([5012ab5](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/5012ab5))
+
 # [2.2.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.1.5...v2.2.0) (2024-11-20)
 
 
