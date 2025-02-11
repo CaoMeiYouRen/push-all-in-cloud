@@ -259,6 +259,9 @@ fetch(url, {
 | ONE_BOT_ACCESS_TOKEN      | OneBot AccessToken                                           |
 | ONE_BOT_MSG_TYPE          | 消息类型   'private' 或 'group'                              |
 | ONE_BOT_RECIEVER_ID       | 用户/群组 ID，即 QQ 号或群号                                 |
+| NTFY_URL                  | ntfy 推送地址                                                |
+| NTFY_TOPIC                | ntfy 主题                                                    |
+| NTFY_AUTH                 | ntfy 认证参数                                                |
 
 ## 🛠️ 开发
 
