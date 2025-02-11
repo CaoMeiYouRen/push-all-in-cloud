@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType, Feishu } from 'push-all-in-one'
+import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType, Feishu, Ntfy } from 'push-all-in-one'
 import logger from './logger'
 
 const warn = (text: string) => logger.warn(text)
@@ -219,6 +219,33 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         info('OneBot 推送 已加入推送队列')
     } else {
         info('未配置 OneBot 推送，已跳过')
+    }
+
+    if (env.NTFY_TOPIC) {
+        const ntfy = new Ntfy({
+            NTFY_URL: env.NTFY_URL || 'https://ntfy.sh',
+            NTFY_TOPIC: env.NTFY_TOPIC,
+            NTFY_AUTH: env.NTFY_AUTH,
+        })
+        pushs.push(ntfy.send(title, desp, {
+            priority: Number(env.NTFY_PRIORITY) || 1,
+            tags: env.NTFY_TAGS,
+            click: env.NTFY_CLICK,
+            actions: env.NTFY_ACTIONS,
+            filename: env.NTFY_FILENAME,
+            attach: env.NTFY_ATTACH,
+            delay: env.NTFY_DELAY,
+            title: env.NTFY_TITLE,
+            email: env.NTFY_EMAIL,
+            icon: env.NTFY_ICON,
+            markdown: env.NTFY_MARKDOWN === 'true',
+            cache: env.NTFY_CACHE === 'true',
+            firebase: env.NTFY_FIREBASE === 'true',
+            unifiedPush: env.NTFY_UNIFIED_PUSH === 'true',
+        }))
+        info('Ntfy 推送 已加入推送队列')
+    } else {
+        info('未配置 Ntfy 推送，已跳过')
     }
 
     if (pushs.length === 0) {
