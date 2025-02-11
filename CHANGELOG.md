@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.4.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.3.0...v2.4.0) (2025-02-11)
+
+
+### ✨ 新功能
+
+* 更新 push-all-in-one 依赖至 4.3.0，添加 Ntfy 推送支持 ([6dd3938](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/6dd3938))
+
 # [2.3.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.2.0...v2.3.0) (2025-02-10)
 
 
