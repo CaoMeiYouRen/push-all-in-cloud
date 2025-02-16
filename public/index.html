@@ -18,8 +18,44 @@
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
     <!-- 引入highlight.js的JavaScript语言支持 -->
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/javascript.min.js"></script>
-
     <script src="https://unpkg.com/@highlightjs/vue-plugin@2.1.0/dist/highlightjs-vue.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+        }
+        #app {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .form-container .el-input,
+        .form-container .el-textarea {
+            width: 100%;
+            max-width: 600px;
+        }
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .config-section {
+            margin-bottom: 20px;
+        }
+        .config-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        @media (min-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -27,23 +63,23 @@
         <p><a href="https://github.com/CaoMeiYouRen/push-all-in-one" target="_blank">push-all-in-one</a> 和
             <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud" target="_blank">push-all-in-cloud</a> 通用配置生成器
         </p>
-        <div class="demo-collapse">
+        <div class="form-container">
             <el-collapse v-model="activeName">
                 <el-collapse-item title="转发 KEY 配置(AUTH_FORWARD_KEY)" name="AUTH_FORWARD_KEY">
-                    <el-input v-model="AUTH_FORWARD_KEY" style="width: 50%;"
+                    <el-input v-model="AUTH_FORWARD_KEY"
                         placeholder="访问 /forward 路由，执行转发推送需要的 key，即环境变量中的 AUTH_FORWARD_KEY 字段"></el-input>
                 </el-collapse-item>
                 <el-collapse-item title="测试推送的标题和正文" name="TEST_PUSH_TITLE">
-                    <el-input v-model="title" style="width: 50%;" placeholder="请输入测试推送的标题"></el-input><br /><br />
-                    <el-input v-model="desp" style="width: 50%;" placeholder="请输入测试推送的正文" type="textarea"></el-input>
+                    <el-input v-model="title" placeholder="请输入测试推送的标题"></el-input><br /><br />
+                    <el-input v-model="desp" placeholder="请输入测试推送的正文" type="textarea"></el-input>
                 </el-collapse-item>
             </el-collapse>
         </div>
         <el-tabs v-model="type" class="demo-tabs" @tab-change="tabChange">
             <template v-for="item in options">
                 <el-tab-pane :label="item.namespace" :name="item.name">
-                    <div style="display: flex;">
-                        <div style="width: 50%; padding-right: 20px;">
+                    <div class="content-wrapper">
+                        <div class="config-section">
                             <label>type: {{item.name}}</label>
                             <p>构造函数配置项</p>
                             <avue-form :option="item.avueConfig" v-model="configValues[item.name]"
@@ -52,31 +88,24 @@
                             <avue-form :option="item.avueOption" v-model="optionValues[item.name]"
                                 @submit="postForward"></avue-form>
                         </div>
-                        <div style="width: 50%;">
+                        <div class="config-section">
                             <label>配置结果</label>
-
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>构造函数配置项</p>
-                                    <span style="margin-top: 11px;">
-                                        <el-button type="primary" @click="copyText(getConfigValue(item.name))">复制
-                                        </el-button>
-                                    </span>
+                                    <el-button type="primary" @click="copyText(getConfigValue(item.name))">复制</el-button>
                                 </div>
                                 <highlightjs language="javascript" :code="getConfigValue(item.name)" />
                             </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>附加参数选项(注意：附加参数为空的时候不要设置，否则会覆盖默认配置)</p>
-                                    <span style="margin-top: 11px;">
-                                        <el-button type="primary" @click="copyText(getOptionValue(item.name))">复制
-                                        </el-button>
-                                    </span>
+                                    <el-button type="primary" @click="copyText(getOptionValue(item.name))">复制</el-button>
                                 </div>
                                 <highlightjs language="javascript" :code="getOptionValue(item.name)" />
                             </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>推送结果</p>
                                 </div>
                                 <highlightjs language="javascript" :code="JSON.stringify(response || {}, null, 4)" />
