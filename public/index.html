@@ -72,7 +72,21 @@
             <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud" target="_blank">push-all-in-cloud</a> 通用配置生成器
         </p>
         <div class="form-container">
-            <el-button type="warning" @click="clearLocalStorage" style="margin-bottom: 16px;">清除所有缓存数据</el-button>
+            <div style="margin-bottom: 16px;">
+                <el-button type="warning" @click="clearLocalStorage" style="margin-right: 10px;">清除所有缓存数据</el-button>
+                <el-button type="primary" @click="exportConfig" style="margin-right: 10px;">导出配置</el-button>
+                <el-upload
+                    class="upload-demo"
+                    action="#"
+                    :auto-upload="false"
+                    :show-file-list="false"
+                    :on-change="handleImportFile"
+                    accept=".json"
+                    style="display: inline-block;"
+                >
+                    <el-button type="success">导入配置</el-button>
+                </el-upload>
+            </div>
             <el-collapse v-model="activeName">
                 <el-collapse-item title="转发 KEY 配置(AUTH_FORWARD_KEY)" name="AUTH_FORWARD_KEY">
                     <div class="key-input-group">
@@ -247,6 +261,57 @@
                 }
             },
             methods: {
+                exportConfig() {
+                    try {
+                        const exportData = {
+                            configValues: this.configValues,
+                            optionValues: this.optionValues,
+                            AUTH_FORWARD_KEY: this.AUTH_FORWARD_KEY,
+                            title: this.title,
+                            desp: this.desp
+                        };
+                        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'push-all-in-cloud-config.json';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                        ElMessage.success('导出成功');
+                    } catch (error) {
+                        console.error('导出失败:', error);
+                        ElMessage.error('导出失败');
+                    }
+                },
+                async handleImportFile(file) {
+                    try {
+                        const content = await file.raw.text();
+                        const importData = JSON.parse(content);
+
+                        // 验证导入数据的结构
+                        const requiredKeys = ['configValues', 'optionValues'];
+                        const missingKeys = requiredKeys.filter(key => !(key in importData));
+
+                        if (missingKeys.length > 0) {
+                            throw new Error(`导入的配置文件缺少必要字段: ${missingKeys.join(', ')}`);
+                        }
+
+                        // 更新本地存储
+                        Object.entries(importData).forEach(([key, value]) => {
+                            this.setLocalStorage(key, value);
+                        });
+
+                        ElMessage.success('导入成功，页面将在 2 秒后刷新');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } catch (error) {
+                        console.error('导入失败:', error);
+                        ElMessage.error(`导入失败: ${error.message}`);
+                    }
+                },
                 setLocalStorage(key, value) {
                     try {
                         localStorage.setItem(key, JSON.stringify(value));
