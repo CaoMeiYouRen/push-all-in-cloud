@@ -18,8 +18,52 @@
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
     <!-- 引入highlight.js的JavaScript语言支持 -->
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/javascript.min.js"></script>
-
     <script src="https://unpkg.com/@highlightjs/vue-plugin@2.1.0/dist/highlightjs-vue.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+        }
+        #app {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .form-container .el-input,
+        .form-container .el-textarea {
+            width: 100%;
+            max-width: 600px;
+        }
+        .key-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .key-input-group .el-input {
+            flex: 1;
+        }
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .config-section {
+            margin-bottom: 20px;
+        }
+        .config-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        @media (min-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -27,56 +71,67 @@
         <p><a href="https://github.com/CaoMeiYouRen/push-all-in-one" target="_blank">push-all-in-one</a> 和
             <a href="https://github.com/CaoMeiYouRen/push-all-in-cloud" target="_blank">push-all-in-cloud</a> 通用配置生成器
         </p>
-        <div class="demo-collapse">
+        <div class="form-container">
+            <div style="margin-bottom: 16px;">
+                <el-button type="warning" @click="clearLocalStorage" style="margin-right: 10px;">清除所有缓存数据</el-button>
+                <el-button type="primary" @click="exportConfig" style="margin-right: 10px;">导出配置</el-button>
+                <el-upload
+                    class="upload-demo"
+                    action="#"
+                    :auto-upload="false"
+                    :show-file-list="false"
+                    :on-change="handleImportFile"
+                    accept=".json"
+                    style="display: inline-block;"
+                >
+                    <el-button type="success">导入配置</el-button>
+                </el-upload>
+            </div>
             <el-collapse v-model="activeName">
                 <el-collapse-item title="转发 KEY 配置(AUTH_FORWARD_KEY)" name="AUTH_FORWARD_KEY">
-                    <el-input v-model="AUTH_FORWARD_KEY" style="width: 50%;"
-                        placeholder="访问 /forward 路由，执行转发推送需要的 key，即环境变量中的 AUTH_FORWARD_KEY 字段"></el-input>
+                    <div class="key-input-group">
+                        <el-input v-model="AUTH_FORWARD_KEY"
+                            placeholder="访问 /forward 路由，执行转发推送需要的 key，即环境变量中的 AUTH_FORWARD_KEY 字段。验证方式为 Bearer Auth。"></el-input>
+                        <el-button type="primary" @click="goToForward">跳转</el-button>
+                    </div>
                 </el-collapse-item>
                 <el-collapse-item title="测试推送的标题和正文" name="TEST_PUSH_TITLE">
-                    <el-input v-model="title" style="width: 50%;" placeholder="请输入测试推送的标题"></el-input><br /><br />
-                    <el-input v-model="desp" style="width: 50%;" placeholder="请输入测试推送的正文" type="textarea"></el-input>
+                    <el-input v-model="title" placeholder="请输入测试推送的标题"></el-input><br /><br />
+                    <el-input v-model="desp" placeholder="请输入测试推送的正文，支持 markdown 格式" type="textarea"></el-input>
                 </el-collapse-item>
             </el-collapse>
         </div>
         <el-tabs v-model="type" class="demo-tabs" @tab-change="tabChange">
             <template v-for="item in options">
                 <el-tab-pane :label="item.namespace" :name="item.name">
-                    <div style="display: flex;">
-                        <div style="width: 50%; padding-right: 20px;">
+                    <div class="content-wrapper">
+                        <div class="config-section">
                             <label>type: {{item.name}}</label>
-                            <p>构造函数配置项</p>
+                            <p>构造函数配置项（必填项，用于初始化推送服务）</p>
                             <avue-form :option="item.avueConfig" v-model="configValues[item.name]"
                                 @submit="postForward"></avue-form>
-                            <p>附加参数选项</p>
+                            <p>附加参数选项（可选项，用于自定义推送行为）</p>
                             <avue-form :option="item.avueOption" v-model="optionValues[item.name]"
                                 @submit="postForward"></avue-form>
                         </div>
-                        <div style="width: 50%;">
+                        <div class="config-section">
                             <label>配置结果</label>
-
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>构造函数配置项</p>
-                                    <span style="margin-top: 11px;">
-                                        <el-button type="primary" @click="copyText(getConfigValue(item.name))">复制
-                                        </el-button>
-                                    </span>
+                                    <el-button type="primary" @click="copyText(getConfigValue(item.name))">复制</el-button>
                                 </div>
                                 <highlightjs language="javascript" :code="getConfigValue(item.name)" />
                             </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>附加参数选项(注意：附加参数为空的时候不要设置，否则会覆盖默认配置)</p>
-                                    <span style="margin-top: 11px;">
-                                        <el-button type="primary" @click="copyText(getOptionValue(item.name))">复制
-                                        </el-button>
-                                    </span>
+                                    <el-button type="primary" @click="copyText(getOptionValue(item.name))">复制</el-button>
                                 </div>
                                 <highlightjs language="javascript" :code="getOptionValue(item.name)" />
                             </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between;">
+                            <div class="config-block">
+                                <div class="config-header">
                                     <p>推送结果</p>
                                 </div>
                                 <highlightjs language="javascript" :code="JSON.stringify(response || {}, null, 4)" />
@@ -93,6 +148,55 @@
         const API_ENDPOINTS = {
             OPTION: '/option',
             FORWARD: '/forward'
+        };
+
+        // Token 配置说明
+        const TOKEN_DESCRIPTIONS = {
+            'ServerChanTurbo': {
+                key: 'SERVER_CHAN_TURBO_SENDKEY',
+                desc: 'Server 酱·Turbo SCTKEY',
+                doc: 'https://sct.ftqq.com/'
+            },
+            'ServerChanV3': {
+                key: 'SERVER_CHAN_V3_SENDKEY',
+                desc: 'Server 酱³ 的 sendkey',
+                doc: 'https://sc3.ft07.com/doc'
+            },
+            'Dingtalk': {
+                key: 'DINGTALK_ACCESS_TOKEN',
+                desc: '钉钉机器人 access_token',
+                doc: 'https://developers.dingtalk.com/document/app/custom-robot-access'
+            },
+            'WechatRobot': {
+                key: 'WECHAT_ROBOT_KEY',
+                desc: '企业微信群机器人',
+                doc: 'https://work.weixin.qq.com/help?person_id=1&doc_id=13376'
+            },
+            'WechatApp': {
+                key: 'WECHAT_APP_CORPID',
+                desc: '企业微信企业 ID',
+                doc: 'https://work.weixin.qq.com/api/doc/90000/90135/91039#14953/corpid'
+            },
+            'PushDeer': {
+                key: 'PUSH_DEER_PUSH_KEY',
+                desc: 'PushDeer 推送',
+                doc: 'https://github.com/easychen/pushdeer'
+            },
+            'Discord': {
+                key: 'DISCORD_WEBHOOK',
+                desc: 'Discord Webhook Url，可在服务器设置 -> 整合 -> Webhook -> 创建 Webhook 中获取',
+                doc: 'https://support.discord.com/hc/zh-tw/articles/228383668-%E4%BD%BF%E7%94%A8%E7%B6%B2%E7%B5%A1%E9%89%A4%E6%89%8B-Webhooks-'
+            },
+            'Telegram': {
+                key: 'TELEGRAM_BOT_TOKEN',
+                desc: 'Telegram Bot 机器人令牌，您可以从 https://t.me/BotFather 获取 Token',
+                doc: 'https://core.telegram.org/bots/api#making-requests'
+            },
+            'OneBot': {
+                key: 'ONE_BOT_ACCESS_TOKEN',
+                desc: 'OneBot AccessToken',
+                doc: 'https://github.com/botuniverse/onebot-11'
+            }
         };
 
         async function fetchData(endpoint, options = {}) {
@@ -118,14 +222,14 @@
                 return {
                     activeName: 'AUTH_FORWARD_KEY',
                     type: '',
-                    configValues: {},
-                    optionValues: {},
+                    configValues: this.getLocalStorage('configValues') || {},
+                    optionValues: this.getLocalStorage('optionValues') || {},
                     options: {},
                     response: {},
                     AUTH_PUSH_KEY: '',
-                    AUTH_FORWARD_KEY: '',
-                    title: 'PushAllInOne 测试推送标题',
-                    desp: 'PushAllInOne 测试推送正文'
+                    AUTH_FORWARD_KEY: this.getLocalStorage('AUTH_FORWARD_KEY') || '',
+                    title: this.getLocalStorage('title') || 'PushAllInOne 测试推送标题',
+                    desp: this.getLocalStorage('desp') || 'PushAllInOne 测试推送正文'
                 };
             },
             computed: {
@@ -133,11 +237,111 @@
                     return this.options[this.type]?.namespace || '';
                 }
             },
+            watch: {
+                configValues: {
+                    handler(newVal) {
+                        this.setLocalStorage('configValues', newVal);
+                    },
+                    deep: true
+                },
+                optionValues: {
+                    handler(newVal) {
+                        this.setLocalStorage('optionValues', newVal);
+                    },
+                    deep: true
+                },
+                AUTH_FORWARD_KEY(newVal) {
+                    this.setLocalStorage('AUTH_FORWARD_KEY', newVal);
+                },
+                title(newVal) {
+                    this.setLocalStorage('title', newVal);
+                },
+                desp(newVal) {
+                    this.setLocalStorage('desp', newVal);
+                }
+            },
             methods: {
+                exportConfig() {
+                    try {
+                        const exportData = {
+                            configValues: this.configValues,
+                            optionValues: this.optionValues,
+                            AUTH_FORWARD_KEY: this.AUTH_FORWARD_KEY,
+                            title: this.title,
+                            desp: this.desp
+                        };
+                        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'push-all-in-cloud-config.json';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                        ElMessage.success('导出成功');
+                    } catch (error) {
+                        console.error('导出失败:', error);
+                        ElMessage.error('导出失败');
+                    }
+                },
+                async handleImportFile(file) {
+                    try {
+                        const content = await file.raw.text();
+                        const importData = JSON.parse(content);
+
+                        // 验证导入数据的结构
+                        const requiredKeys = ['configValues', 'optionValues'];
+                        const missingKeys = requiredKeys.filter(key => !(key in importData));
+
+                        if (missingKeys.length > 0) {
+                            throw new Error(`导入的配置文件缺少必要字段: ${missingKeys.join(', ')}`);
+                        }
+
+                        // 更新本地存储
+                        Object.entries(importData).forEach(([key, value]) => {
+                            this.setLocalStorage(key, value);
+                        });
+
+                        ElMessage.success('导入成功，页面将在 2 秒后刷新');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } catch (error) {
+                        console.error('导入失败:', error);
+                        ElMessage.error(`导入失败: ${error.message}`);
+                    }
+                },
+                setLocalStorage(key, value) {
+                    try {
+                        localStorage.setItem(key, JSON.stringify(value));
+                    } catch (error) {
+                        console.error('Failed to save to localStorage:', error);
+                    }
+                },
+                getLocalStorage(key) {
+                    try {
+                        const value = localStorage.getItem(key);
+                        return value ? JSON.parse(value) : null;
+                    } catch (error) {
+                        console.error('Failed to get from localStorage:', error);
+                        return null;
+                    }
+                },
+                clearLocalStorage() {
+                    localStorage.clear();
+                    ElMessage.success('已清除所有本地缓存数据');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                },
                 async getOption() {
                     const { data: { option } } = await fetchData(API_ENDPOINTS.OPTION);
                     this.options = option;
                     this.type = Object.keys(option)?.[0];
+                },
+                goToForward() {
+                    window.open('/forward', '_blank');
                 },
                 copyText,
                 async postForward(form, done) {
@@ -178,7 +382,9 @@
                     return JSON.stringify(filteredOption, null, 4);
                 },
                 tabChange(name) {
-                    this.desp = 'PushAllInOne 测试推送 - ' + this.currentNamespace;
+                    if (!this.desp.includes(this.currentNamespace)) {
+                        this.desp = 'PushAllInOne 测试推送 - ' + this.currentNamespace;
+                    }
                 }
             },
             mounted() {
