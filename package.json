@@ -29,7 +29,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/debug": "^4.1.12",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "commitizen": "^4.3.1",
@@ -50,14 +50,14 @@
     "ts-node-dev": "^2.0.0",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
-    "vercel": "^41.0.2",
-    "wrangler": "^3.107.3"
+    "vercel": "^41.1.4",
+    "wrangler": "^3.109.1"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
-    "hono": "^4.7.0",
+    "hono": "^4.7.1",
     "push-all-in-one": "4.3.0",
     "tslib": "^2.8.1",
     "tsx": "^4.19.2",
