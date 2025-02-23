@@ -45,7 +45,7 @@
     "lint-staged": "^15.4.3",
     "rimraf": "^6.0.1",
     "semantic-release": "21.0.1",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsup": "^8.3.6",
