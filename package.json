@@ -48,7 +48,7 @@
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "tsup": "^8.3.6",
+    "tsup": "^8.4.0",
     "typescript": "^5.8.2",
     "vercel": "^41.3.0",
     "wrangler": "^3.111.0"
