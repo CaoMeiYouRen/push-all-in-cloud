@@ -262,6 +262,8 @@ fetch(url, {
 | NTFY_URL                  | ntfy 推送地址                                                |
 | NTFY_TOPIC                | ntfy 主题                                                    |
 | NTFY_AUTH                 | ntfy 认证参数                                                |
+| WX_PUSHER_APP_TOKEN       | WxPusher appToken。在 https://wxpusher.zjiecode.com/admin/main/app/appToken 申请。 |
+| WX_PUSHER_UID             | WxPusher uid。在 https://wxpusher.zjiecode.com/admin/main/wxuser/list 查看。 |
 
 ## 🛠️ 开发
 

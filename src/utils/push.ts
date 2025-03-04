@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType, Feishu, Ntfy } from 'push-all-in-one'
+import { ServerChanTurbo, ServerChanV3, CustomEmail, Dingtalk, WechatRobot, WechatApp, PushPlus, IGot, Qmsg, XiZhi, PushDeer, Discord, OneBot, Telegram, CustomEmailType, PushDeerPushType, WechatRobotMsgType, WechatAppMsgType, PushPlusTemplateType, PushPlusChannelType, runPushAllInOne, DingtalkMsgType, OneBotMsgType, Feishu, Ntfy, WxPusher } from 'push-all-in-one'
 import logger from './logger'
 
 const warn = (text: string) => logger.warn(text)
@@ -246,6 +246,20 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         info('Ntfy 推送 已加入推送队列')
     } else {
         info('未配置 Ntfy 推送，已跳过')
+    }
+
+    if (env.WX_PUSHER_APP_TOKEN && env.WX_PUSHER_UID) {
+        // WxPusher 推送。官方文档：https://wxpusher.zjiecode.com/docs
+        const wxPusher = new WxPusher({
+            WX_PUSHER_APP_TOKEN: env.WX_PUSHER_APP_TOKEN,
+            WX_PUSHER_UID: env.WX_PUSHER_UID,
+        })
+        pushs.push(wxPusher.send(title, desp, {
+            contentType: 3, // 使用 markdown 格式
+        }))
+        info('WxPusher 推送 已加入推送队列')
+    } else {
+        info('未配置 WxPusher 推送，已跳过')
     }
 
     if (pushs.length === 0) {
