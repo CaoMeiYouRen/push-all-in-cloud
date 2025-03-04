@@ -1,5 +1,19 @@
 # push-all-in-cloud
 
+# [2.5.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.4.0...v2.5.0) (2025-03-04)
+
+
+### ♻ 代码重构
+
+* **layout:** 重构页面布局并添加样式 ([edec8b2](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/edec8b2))
+
+
+### ✨ 新功能
+
+* **public:** 优化配置页面功能和用户体验 ([687872d](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/687872d))
+* **public:** 添加配置导出和导入功能 ([bca67ed](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/bca67ed))
+* **push:** 添加 WxPusher 推送支持并更新相关文档 ([1e29e87](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/1e29e87))
+
 # [2.4.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.3.0...v2.4.0) (2025-02-11)
 
 
