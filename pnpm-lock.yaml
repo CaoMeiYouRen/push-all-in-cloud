@@ -12,8 +12,8 @@ importers:
         specifier: ^1.14.0
         version: 1.14.0(hono@4.7.5)
       axios:
-        specifier: ^1.8.4
-        version: 1.8.4(debug@4.4.0)
+        specifier: ^1.9.0
+        version: 1.9.0(debug@4.4.0)
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
@@ -1846,8 +1846,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.8.4:
-    resolution: {integrity: sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==}
+  axios@1.9.0:
+    resolution: {integrity: sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -7654,7 +7654,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.8.4(debug@4.4.0):
+  axios@1.9.0(debug@4.4.0):
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.0)
       form-data: 4.0.2
@@ -10947,7 +10947,7 @@ snapshots:
   push-all-in-one@4.4.1:
     dependencies:
       '@colors/colors': 1.6.0
-      axios: 1.8.4(debug@4.4.0)
+      axios: 1.9.0(debug@4.4.0)
       debug: 4.4.0
       https-proxy-agent: 7.0.6
       nodemailer: 6.10.0
