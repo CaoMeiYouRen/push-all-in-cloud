@@ -51,7 +51,7 @@
     "tsup": "^8.4.0",
     "typescript": "^5.8.2",
     "vercel": "^41.7.0",
-    "wrangler": "^4.6.0"
+    "wrangler": "^4.13.2"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.0",
