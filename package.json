@@ -54,7 +54,7 @@
     "wrangler": "^4.13.2"
   },
   "dependencies": {
-    "@hono/node-server": "^1.14.1",
+    "@hono/node-server": "^1.14.4",
     "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "hono": "^4.7.8",
