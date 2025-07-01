@@ -57,7 +57,7 @@
     "@hono/node-server": "^1.14.1",
     "axios": "^1.9.0",
     "dotenv": "^17.0.0",
-    "hono": "^4.7.8",
+    "hono": "^4.8.3",
     "push-all-in-one": "4.4.1",
     "tslib": "^2.8.1",
     "tsx": "^4.20.3",
