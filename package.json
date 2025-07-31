@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.18.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "dotenv": "^17.2.1",
     "hono": "^4.8.3",
     "push-all-in-one": "4.4.1",
