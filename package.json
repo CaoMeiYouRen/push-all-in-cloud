@@ -47,7 +47,7 @@
     "ts-node-dev": "^2.0.0",
     "tsup": "^8.4.0",
     "typescript": "^5.9.2",
-    "vercel": "^46.0.2",
+    "vercel": "^46.1.1",
     "wrangler": "^4.33.1"
   },
   "dependencies": {
