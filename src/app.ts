@@ -43,7 +43,7 @@ app.onError((error, c) => {
 //     message: 'Hello PushAllInCloud!',
 // }))
 
-type PushBody = {
+interface PushBody {
     title: string
     desp?: string
 }
@@ -54,7 +54,7 @@ app.post('/push', async (c, next) => {
     return next()
 }, async (c) => {
     const { title, desp } = await c.req.json<PushBody>() || {}
-    const envValue = env(c) as Record<string, string>
+    const envValue = env(c)
     const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
         message: 'OK',

@@ -210,13 +210,13 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
         pushs.push(oneBot.send(title, desp || '',
             (env.ONE_BOT_MSG_TYPE as OneBotMsgType || 'private') === 'private'
                 ? {
-                        message_type: 'private',
-                        user_id: Number(env.ONE_BOT_RECIEVER_ID),
-                    }
+                    message_type: 'private',
+                    user_id: Number(env.ONE_BOT_RECIEVER_ID),
+                }
                 : {
-                        message_type: 'group',
-                        group_id: Number(env.ONE_BOT_RECIEVER_ID),
-                    },
+                    message_type: 'group',
+                    group_id: Number(env.ONE_BOT_RECIEVER_ID),
+                },
         ))
         info('OneBot 推送 已加入推送队列')
     } else {
