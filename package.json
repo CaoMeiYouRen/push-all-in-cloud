@@ -53,7 +53,7 @@
   "dependencies": {
     "@hono/node-server": "^1.19.12",
     "axios": "^1.14.0",
-    "hono": "^4.12.10",
+    "hono": "^4.12.12",
     "push-all-in-one": "4.5.2",
     "dotenv": "^17.3.1",
     "tslib": "^2.8.1",
