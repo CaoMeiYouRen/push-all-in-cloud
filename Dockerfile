@@ -10,7 +10,7 @@ FROM nodejs AS builder
 
 WORKDIR /app
 
-COPY package.json .npmrc /app/
+COPY package.json .npmrc pnpm-workspace.yaml /app/
 
 RUN pnpm i
 
