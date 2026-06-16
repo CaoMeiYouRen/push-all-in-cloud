@@ -1,0 +1,33 @@
+allowBuilds:
+  esbuild: set this to true or false
+  sharp: set this to true or false
+  unrs-resolver: set this to true or false
+  workerd: set this to true or false
+
+overrides:
+  "@tootallnate/once": "3.0.1"
+  "@semantic-release/github>undici": "7.24.4"
+  "@vercel/backends>srvx": "0.11.14"
+  "@vercel/node>undici": "6.24.1"
+  basic-ftp: "5.3.1"
+  cross-spawn: "^7.0.6"
+  esbuild: "0.28.1"
+  fast-uri: "3.1.2"
+  flatted: "^3.4.2"
+  form-data: "4.0.6"
+  glob@^10: "10.5.0"
+  glob@^11: "11.1.0"
+  handlebars: "^4.7.9"
+  js-yaml@^3: "3.14.2"
+  js-yaml@^4: "4.1.1"
+  lodash: "^4.18.1"
+  lodash-es: "^4.18.1"
+  minimatch: "^3.1.5"
+  path-to-regexp: "8.4.0"
+  picomatch@^2: "2.3.2"
+  picomatch@^4: "4.0.4"
+  rollup: "^4.60.1"
+  tar@^7: "7.5.13"
+  tmp: "0.2.6"
+  ws: "8.21.0"
+  yaml: "^2.8.3"
