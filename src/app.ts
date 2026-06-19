@@ -6,11 +6,9 @@ import { HTTPException } from 'hono/http-exception'
 import { StatusCode } from 'hono/utils/http-status'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
-import { env } from 'hono/adapter'
 import { MetaPushConfig, PushType } from 'push-all-in-one'
 import { batchPushAllInOne, runPushAllInOne } from './utils/push'
 import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
-import { winstonLogger } from './utils/logger'
 import { pushAllInOneSchema } from './client'
 
 const app = new Hono()
@@ -30,8 +28,7 @@ app.onError((error, c) => {
         statusText = response.statusText
     }
     c.status(status as StatusCode)
-    const requestPath = c.req.path
-    winstonLogger.error(`Error in ${requestPath}: \n${message}`)
+    console.error(`Error: ${message}`)
     return c.json({
         status,
         statusText,
@@ -39,23 +36,22 @@ app.onError((error, c) => {
     })
 })
 
-// app.all('/', (c) => c.json({
-//     message: 'Hello PushAllInCloud!',
-// }))
-
 interface PushBody {
     title: string
     desp?: string
+    message?: string  // 兼容 biliLive-tools 等客户端
 }
+
 app.post('/push', async (c, next) => {
     if (AUTH_PUSH_KEY) {
         return bearerAuth({ token: AUTH_PUSH_KEY })(c, next)
     }
     return next()
 }, async (c) => {
-    const { title, desp } = await c.req.json<PushBody>() || {}
-    const envValue = env(c)
-    const data = await batchPushAllInOne(title, desp, envValue)
+    const body = await c.req.json<PushBody>() || {}
+    const title = body.title
+    const desp = body.desp || body.message || ''  // 优先 desp，其次 message
+    const data = await batchPushAllInOne(title, desp, process.env)
     return c.json({
         message: 'OK',
         data,
@@ -65,6 +61,7 @@ app.post('/push', async (c, next) => {
 type ForwardBody = {
     title: string
     desp?: string
+    message?: string
 } & MetaPushConfig<PushType>
 
 app.post('/forward', async (c, next) => {
@@ -73,7 +70,10 @@ app.post('/forward', async (c, next) => {
     }
     await next()
 }, async (c) => {
-    const { title, desp, type, config, option } = await c.req.json<ForwardBody>() || {}
+    const body = await c.req.json<ForwardBody>() || {}
+    const title = body.title
+    const desp = body.desp || body.message || ''
+    const { type, config, option } = body
     const { data, status, statusText, headers } = await runPushAllInOne(title, desp, { type, config, option })
     return c.json({
         message: 'OK',
