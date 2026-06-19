@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.5.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.5.0...v2.5.1) (2026-06-19)
+
+
+### 🐛 Bug 修复
+
+* **workflows:** 添加类型检查步骤 ([9908111](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/9908111)), closes [#360](https://github.com/CaoMeiYouRen/push-all-in-cloud/issues/360)
+
 # [2.5.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.4.0...v2.5.0) (2025-03-04)
 
 
