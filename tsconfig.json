@@ -11,17 +11,16 @@
         "importHelpers": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "strictPropertyInitialization": false,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         // "allowImportingTsExtensions": true,
         // "noEmit": true,
         "removeComments": true,
-        "baseUrl": ".",
         "paths": {
             "@/*": [
-                "src/*"
+                "./src/*"
             ]
         },
         "lib": [

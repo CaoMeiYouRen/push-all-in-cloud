@@ -4,6 +4,11 @@ allowBuilds:
   unrs-resolver: true
   workerd: true
 
+minimumReleaseAgeExclude:
+  - '@types/node@26.0.0'
+  - miniflare@4.20260617.0
+  - wrangler@4.102.0
+
 overrides:
   "@tootallnate/once": "3.0.1"
   "@semantic-release/github>undici": "7.24.4"

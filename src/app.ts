@@ -39,10 +39,6 @@ app.onError((error, c) => {
     })
 })
 
-// app.all('/', (c) => c.json({
-//     message: 'Hello PushAllInCloud!',
-// }))
-
 interface PushBody {
     title: string
     desp?: string
@@ -64,7 +60,12 @@ app.post('/push', async (c, next) => {
     }
     return next()
 }, async (c) => {
-    const { title, desp } = await c.req.json<PushBody>() || {}
+    const { title, desp } = await c.req.json<PushBody>()
+    if (!title) {
+        throw new HTTPException(400, {
+            message: 'title is required',
+        })
+    }
     const envValue = toStringRecord(env(c))
     const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
@@ -84,8 +85,13 @@ app.post('/forward', async (c, next) => {
     }
     await next()
 }, async (c) => {
-    const { title, desp, type, config, option } = await c.req.json<ForwardBody>() || {}
-    const { data, status, statusText, headers } = await runPushAllInOne(title, desp, { type, config, option })
+    const { title, desp, type, config, option } = await c.req.json<ForwardBody>()
+    if (!title) {
+        throw new HTTPException(400, {
+            message: 'title is required',
+        })
+    }
+    const { data, status, statusText, headers } = await runPushAllInOne(title, desp ?? '', { type, config, option })
     return c.json({
         message: 'OK',
         data: {

@@ -14,7 +14,7 @@ export type SendResponse = Partial<Pick<AxiosResponse<any>, 'data' | 'status' | 
  * @param title
  * @param [desp]
  */
-export async function batchPushAllInOne(title: string, desp?: string, env: Record<string, string> = process.env): Promise<PromiseSettledResult<SendResponse>[]> {
+export async function batchPushAllInOne(title: string, desp?: string, env: NodeJS.ProcessEnv = process.env): Promise<PromiseSettledResult<SendResponse>[]> {
     const pushs: Promise<SendResponse>[] = []
     if (env.SERVER_CHAN_TURBO_SENDKEY) {
         // Server酱。官方文档：https://sct.ftqq.com/
@@ -229,7 +229,7 @@ export async function batchPushAllInOne(title: string, desp?: string, env: Recor
             NTFY_TOPIC: env.NTFY_TOPIC,
             NTFY_AUTH: env.NTFY_AUTH,
         })
-        pushs.push(ntfy.send(title, desp, {
+        pushs.push(ntfy.send(title, desp ?? '', {
             priority: Number(env.NTFY_PRIORITY) || 1,
             tags: env.NTFY_TAGS,
             click: env.NTFY_CLICK,

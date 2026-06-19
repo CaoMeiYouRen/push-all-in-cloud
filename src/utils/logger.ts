@@ -21,6 +21,10 @@ const dailyRotateFileOption = {
     auditFile: path.join(logDir, '.audit.json'),
 }
 
+function isTransport<T>(value: false | T): value is T {
+    return Boolean(value)
+}
+
 const winstonLogger = winston.createLogger({
     level: __DEV__ ? 'silly' : 'http',
     exitOnError: false,
@@ -45,21 +49,21 @@ const winstonLogger = winston.createLogger({
             level: 'error',
             filename: '%DATE%.errors.log',
         }),
-    ].filter(Boolean),
+    ].filter(isTransport),
     exceptionHandlers: [
         LOGFILES && new DailyRotateFile({
             ...dailyRotateFileOption,
             level: 'error',
             filename: '%DATE%.errors.log',
         }),
-    ].filter(Boolean),
+    ].filter(isTransport),
     rejectionHandlers: [
         LOGFILES && new DailyRotateFile({
             ...dailyRotateFileOption,
             level: 'error',
             filename: '%DATE%.errors.log',
         }),
-    ].filter(Boolean),
+    ].filter(isTransport),
 })
 
 export { winstonLogger }

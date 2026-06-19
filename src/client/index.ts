@@ -39,7 +39,7 @@ export function convertToAvueOption<T extends ConfigSchema>(schema: T, name: str
             } else if (field.type === 'object') {
                 avueField.type = 'textarea'
             }
-            avueOption.column.push(avueField)
+            ;(avueOption.column ??= []).push(avueField)
         }
     }
     avueOption.title = name
