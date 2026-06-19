@@ -1,6 +1,4 @@
-import { handle } from '@hono/node-server/vercel'
 import app from './app'
-import logger from './utils/logger'
 
 export const runtime = 'nodejs'
 
@@ -10,6 +8,37 @@ export const config = {
     },
 }
 
-logger.info('push-all-in-cloud 云函数启动成功')
+export default async function handler(req: any, res: any) {
+    const url = new URL(req.url, `https://${req.headers.host}`)
+    const headers = new Headers()
+    for (const [key, value] of Object.entries(req.headers)) {
+        if (value) {
+            headers.set(key, Array.isArray(value) ? value.join(', ') : value)
+        }
+    }
 
-export default handle(app)
+    let body: any = undefined
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+        const chunks: Buffer[] = []
+        for await (const chunk of req) {
+            chunks.push(chunk)
+        }
+        body = Buffer.concat(chunks)
+    }
+
+    const request = new Request(url.toString(), {
+        method: req.method,
+        headers,
+        body,
+    })
+
+    const response = await app.fetch(request)
+
+    res.status(response.status)
+    response.headers.forEach((value: string, key: string) => {
+        res.setHeader(key, value)
+    })
+
+    const responseBody = await response.text()
+    res.end(responseBody)
+}
