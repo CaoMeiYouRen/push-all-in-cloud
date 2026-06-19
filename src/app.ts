@@ -47,6 +47,17 @@ interface PushBody {
     title: string
     desp?: string
 }
+
+function toStringRecord(value: Record<string, unknown>): Record<string, string> {
+    const result: Record<string, string> = {}
+    Object.entries(value).forEach(([key, entryValue]) => {
+        if (typeof entryValue === 'string') {
+            result[key] = entryValue
+        }
+    })
+    return result
+}
+
 app.post('/push', async (c, next) => {
     if (AUTH_PUSH_KEY) {
         return bearerAuth({ token: AUTH_PUSH_KEY })(c, next)
@@ -54,7 +65,7 @@ app.post('/push', async (c, next) => {
     return next()
 }, async (c) => {
     const { title, desp } = await c.req.json<PushBody>() || {}
-    const envValue = env(c)
+    const envValue = toStringRecord(env(c))
     const data = await batchPushAllInOne(title, desp, envValue)
     return c.json({
         message: 'OK',
