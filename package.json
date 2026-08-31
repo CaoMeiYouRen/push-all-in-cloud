@@ -55,7 +55,7 @@
     "axios": "^1.20.0",
     "dotenv": "^17.4.2",
     "hono": "^4.13.5",
-    "push-all-in-one": "4.5.2",
+    "push-all-in-one": "4.5.4",
     "tslib": "^2.8.1",
     "tsx": "^4.23.12",
     "winston": "^3.19.0",
