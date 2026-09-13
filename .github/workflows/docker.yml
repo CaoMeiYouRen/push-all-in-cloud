@@ -87,6 +87,8 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          provenance: false
+          sbom: false
       - name: Docker Hub README & description sync
         uses: meeDamian/sync-readme@v1.0.6
         with:
