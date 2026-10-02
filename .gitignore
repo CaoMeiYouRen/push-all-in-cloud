@@ -42,3 +42,5 @@ logs
 .wrangler
 public/index.js
 public/index.global.js
+# dependfix
+dependfix-reports/
