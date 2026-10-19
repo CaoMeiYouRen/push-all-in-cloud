@@ -12,6 +12,10 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "moduleResolution": "bundler",
+        "types": [
+            "node",
+            "jest"
+        ],
         "strictPropertyInitialization": false,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
