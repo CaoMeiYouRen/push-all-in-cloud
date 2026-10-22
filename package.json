@@ -55,7 +55,7 @@
     "axios": "^1.20.0",
     "dotenv": "^17.4.2",
     "hono": "^4.13.11",
-    "push-all-in-one": "4.5.4",
+    "push-all-in-one": "4.7.0",
     "tslib": "^2.8.1",
     "tsx": "^4.23.12",
     "winston": "^3.19.0",
@@ -70,7 +70,7 @@
     "notifications"
   ],
   "engines": {
-    "node": ">=18"
+    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
   },
   "homepage": "https://github.com/CaoMeiYouRen/push-all-in-cloud#readme",
   "repository": {

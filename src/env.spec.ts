@@ -43,6 +43,7 @@ describe('env 默认值', () => {
             LOGFILES: undefined,
             AUTH_PUSH_KEY: undefined,
             AUTH_FORWARD_KEY: undefined,
+            ALLOW_PUBLIC_FORWARD: undefined,
         })
 
         expect(env.PORT).toBe(3000)
@@ -50,6 +51,7 @@ describe('env 默认值', () => {
         expect(env.LOGFILES).toBe(false)
         expect(env.AUTH_PUSH_KEY).toBeUndefined()
         expect(env.AUTH_FORWARD_KEY).toBeUndefined()
+        expect(env.ALLOW_PUBLIC_FORWARD).toBe(false)
         expect(env.__PROD__).toBe(false)
         expect(env.__DEV__).toBe(false)
     })
@@ -73,6 +75,7 @@ describe('env 显式配置', () => {
             LOGFILES: 'true',
             AUTH_PUSH_KEY: 'push-key',
             AUTH_FORWARD_KEY: 'forward-key',
+            ALLOW_PUBLIC_FORWARD: 'true',
         })
 
         expect(env.PORT).toBe(8080)
@@ -80,6 +83,12 @@ describe('env 显式配置', () => {
         expect(env.LOGFILES).toBe(true)
         expect(env.AUTH_PUSH_KEY).toBe('push-key')
         expect(env.AUTH_FORWARD_KEY).toBe('forward-key')
+        expect(env.ALLOW_PUBLIC_FORWARD).toBe(true)
+    })
+
+    it('ALLOW_PUBLIC_FORWARD 仅当值为 true 时开启', () => {
+        expect(loadEnv({ ALLOW_PUBLIC_FORWARD: 'false' }).ALLOW_PUBLIC_FORWARD).toBe(false)
+        expect(loadEnv({ ALLOW_PUBLIC_FORWARD: '1' }).ALLOW_PUBLIC_FORWARD).toBe(false)
     })
 
     it('LOGFILES 仅当值为 true 时开启', () => {

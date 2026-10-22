@@ -6,19 +6,31 @@ import { HTTPException } from 'hono/http-exception'
 import { StatusCode } from 'hono/utils/http-status'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
+import { bodyLimit } from 'hono/body-limit'
 import { env } from 'hono/adapter'
-import { MetaPushConfig, PushType } from 'push-all-in-one'
+import { MetaPushConfig, PushAllInOne, PushType } from 'push-all-in-one'
 import { batchPushAllInOne, runPushAllInOne } from './utils/push'
-import { AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT } from './env'
+import { ALLOW_PUBLIC_FORWARD, AUTH_FORWARD_KEY, AUTH_PUSH_KEY, TIMEOUT, __PROD__ } from './env'
 import { winstonLogger } from './utils/logger'
 import { pushAllInOneSchema } from './client'
 
 const app = new Hono()
 
+const MAX_REQUEST_BODY_SIZE = 1024 * 1024
+
 app.use(logger())
 app.use(timeout(TIMEOUT))
 app.use(cors())
 app.use(secureHeaders({}))
+app.use('/push', bodyLimit({ maxSize: MAX_REQUEST_BODY_SIZE }))
+app.use('/forward', bodyLimit({ maxSize: MAX_REQUEST_BODY_SIZE }))
+
+if (__PROD__ && !AUTH_FORWARD_KEY && !ALLOW_PUBLIC_FORWARD) {
+    winstonLogger.warn('AUTH_FORWARD_KEY 未设置：生产环境 /forward 将返回 503。如确需匿名访问，请设置 ALLOW_PUBLIC_FORWARD=true')
+}
+if (__PROD__ && !AUTH_PUSH_KEY) {
+    winstonLogger.warn('AUTH_PUSH_KEY 未设置：/push 可被匿名调用，存在推送被盗刷的风险')
+}
 
 app.onError((error, c) => {
     const message = process.env.NODE_ENV === 'production' ? `${error.name}: ${error.message}` : error.stack
@@ -83,12 +95,22 @@ app.post('/forward', async (c, next) => {
     if (AUTH_FORWARD_KEY) {
         return bearerAuth({ token: AUTH_FORWARD_KEY })(c, next)
     }
-    await next()
+    if (__PROD__ && !ALLOW_PUBLIC_FORWARD) {
+        throw new HTTPException(503, {
+            message: 'AUTH_FORWARD_KEY is required in production; set ALLOW_PUBLIC_FORWARD=true to allow anonymous /forward',
+        })
+    }
+    return next()
 }, async (c) => {
     const { title, desp, type, config, option } = await c.req.json<ForwardBody>()
     if (!title) {
         throw new HTTPException(400, {
             message: 'title is required',
+        })
+    }
+    if (!Object.hasOwn(PushAllInOne, type)) {
+        throw new HTTPException(400, {
+            message: `Unknown push type: ${type}`,
         })
     }
     const { data, status, statusText, headers } = await runPushAllInOne(title, desp ?? '', { type, config, option })

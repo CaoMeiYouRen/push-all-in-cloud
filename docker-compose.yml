@@ -12,5 +12,8 @@ services:
       NODE_ENV: production
       PORT: 3000
       TZ: "Asia/Shanghai"
+      AUTH_PUSH_KEY: ${AUTH_PUSH_KEY:-}
+      AUTH_FORWARD_KEY: ${AUTH_FORWARD_KEY:-}
+      ALLOW_PUBLIC_FORWARD: ${ALLOW_PUBLIC_FORWARD:-false}
     volumes:
       - ./logs:/app/logs

@@ -23,6 +23,8 @@ jest.mock('./env', () => ({
     __esModule: true,
     AUTH_PUSH_KEY: undefined,
     AUTH_FORWARD_KEY: undefined,
+    ALLOW_PUBLIC_FORWARD: false,
+    __PROD__: false,
     PORT: 3000,
     TIMEOUT: 20000,
 }))
@@ -145,15 +147,35 @@ describe('POST /forward', () => {
             },
         })
     })
+
+    it('未知 type 时应返回 400，且不调用推送实现', async () => {
+        const response = await jsonRequest('/forward', {
+            title: '标题',
+            type: '__proto__',
+            config: {},
+        })
+        const body = await response.json() as ErrorResponse
+
+        expect(response.status).toBe(400)
+        expect(body.message).toContain('Unknown push type')
+        expect(mockedForwardPush).not.toHaveBeenCalled()
+    })
 })
 
 describe('鉴权', () => {
     // app.ts 在请求时读取鉴权配置，因此直接改动被 mock 的 env 模块即可
-    const envMock = jest.requireMock('./env') as { AUTH_PUSH_KEY?: string, AUTH_FORWARD_KEY?: string }
+    const envMock = jest.requireMock('./env') as {
+        AUTH_PUSH_KEY?: string
+        AUTH_FORWARD_KEY?: string
+        ALLOW_PUBLIC_FORWARD?: boolean
+        __PROD__?: boolean
+    }
 
     afterEach(() => {
         envMock.AUTH_PUSH_KEY = undefined
         envMock.AUTH_FORWARD_KEY = undefined
+        envMock.ALLOW_PUBLIC_FORWARD = false
+        envMock.__PROD__ = false
     })
 
     it('配置 AUTH_PUSH_KEY 后 /push 需要 Bearer token，/forward 不受影响', async () => {
@@ -197,5 +219,33 @@ describe('鉴权', () => {
             body: JSON.stringify({ title: '标题', type: 'ServerChanTurbo', config: {} }),
         })
         expect(authorized.status).toBe(200)
+    })
+
+    it('生产环境未配置 AUTH_FORWARD_KEY 且未显式放行时 /forward 返回 503', async () => {
+        envMock.__PROD__ = true
+        envMock.ALLOW_PUBLIC_FORWARD = false
+
+        const response = await app.request('/forward', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: '标题', type: 'ServerChanTurbo', config: {} }),
+        })
+
+        expect(response.status).toBe(503)
+        expect(mockedForwardPush).not.toHaveBeenCalled()
+    })
+
+    it('生产环境设置 ALLOW_PUBLIC_FORWARD=true 后允许匿名 /forward', async () => {
+        envMock.__PROD__ = true
+        envMock.ALLOW_PUBLIC_FORWARD = true
+
+        const response = await app.request('/forward', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: '标题', type: 'ServerChanTurbo', config: {} }),
+        })
+
+        expect(response.status).toBe(200)
+        expect(mockedForwardPush).toHaveBeenCalledTimes(1)
     })
 })

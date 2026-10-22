@@ -6,6 +6,9 @@ on:
     branches:
       - master
       - beta
+  schedule:
+    # 每周一 03:00 (UTC) 重建，及时吸收基础镜像的安全补丁
+    - cron: '0 3 * * 1'
 permissions:
   contents: read
 

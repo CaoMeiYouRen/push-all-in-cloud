@@ -40,8 +40,10 @@ https://push.cmyr.dev
 ## 📦 依赖要求
 
 
-- node >=18
-- pnpm >= 9
+- node `^22.23.4 || ^24.22.1 || >=26.12.1`
+- pnpm >= 11
+
+> Node.js 18/20 已结束支持，低于上述版本的运行时缺少 2026-10-21 Node.js 安全更新（含 Brotli、TLS、DNS 等 CVE），请先升级运行时。Docker 镜像已内置 Node.js 24.22.1。
 
 ## 🚀 部署
 
@@ -52,6 +54,8 @@ https://push.cmyr.dev
  点击以下按钮一键部署到 Vercel。
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FCaoMeiYouRen%2Fpush-all-in-cloud.git)
+
+> 部署后请在 Vercel 项目设置中配置 `AUTH_FORWARD_KEY`（推荐），或显式设置 `ALLOW_PUBLIC_FORWARD=true`；否则生产环境的 `/forward` 会返回 503。
 
 ### Docker 镜像
 
@@ -88,7 +92,7 @@ wget https://raw.githubusercontent.com/CaoMeiYouRen/push-all-in-cloud/refs/heads
 vim docker-compose.yml  # 也可以是你喜欢的编辑器
 ```
 
-> 在公网部署时请务必修改 AUTH_PUSH_KEY、AUTH_FORWARD_KEY 环境变量
+> 在公网部署时请务必修改 AUTH_PUSH_KEY、AUTH_FORWARD_KEY 环境变量。生产环境未设置 `AUTH_FORWARD_KEY` 时，`/forward` 默认返回 503；如确需匿名访问，必须显式设置 `ALLOW_PUBLIC_FORWARD=true`（不推荐）。
 
 启动
 
@@ -187,6 +191,8 @@ fetch(url, {
 
 ### /forward 接口调用例子
 
+> 生产环境默认要求 `AUTH_FORWARD_KEY`，请求需携带 `Authorization: Bearer <key>`；未设置 key 时该接口返回 503。只有显式设置 `ALLOW_PUBLIC_FORWARD=true` 才会允许匿名访问（不推荐）。
+
 提示：可以前往 [push-all-in-cloud 配置生成器](https://push.cmyr.dev/) 在线生成 push-all-in-one 和 push-all-in-cloud 通用配置。
 
 ```ts
@@ -223,7 +229,8 @@ fetch(url, {
 | ------------------------- | ------------------------------------------------------------ |
 | PORT                      | 运行端口                                                     |
 | AUTH_PUSH_KEY             | 【建议设置】访问 /push 路由，执行推送请求需要的 key。验证方式为 `Bearer Auth`。由于该路由需要在环境变量配置推送渠道，所以不设置该项将有接口被盗刷的风险。 |
-| AUTH_FORWARD_KEY          | 访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。 |
+| AUTH_FORWARD_KEY          | 【生产环境必须设置】访问 /forward 路由，执行转发推送需要的 key。验证方式为 `Bearer Auth`。未设置时生产环境的 `/forward` 返回 503；如确需匿名访问，可显式设置 `ALLOW_PUBLIC_FORWARD=true`。 |
+| ALLOW_PUBLIC_FORWARD      | 仅用于兼容匿名 `/forward`。默认 `false`；生产环境未设置 `AUTH_FORWARD_KEY` 时返回 503，设为 `true` 才允许匿名访问（不推荐）。 |
 | SERVER_CHAN_TURBO_SENDKEY | Server 酱·Turbo  SCTKEY。官方文档：https://sct.ftqq.com/     |
 | SERVER_CHAN_V3_SENDKEY    | Server 酱³ 的 sendkey。官方文档：https://sc3.ft07.com/doc    |
 | EMAIL_AUTH_USER           | 自定义邮箱。发件邮箱                                         |

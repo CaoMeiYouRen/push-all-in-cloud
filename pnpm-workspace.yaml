@@ -9,6 +9,7 @@ minimumReleaseAgeExclude:
   - '@types/node@26.0.0'
   - miniflare@4.20260617.0
   - wrangler@4.102.0
+  - push-all-in-one@4.7.0
 
 overrides:
   "@tootallnate/once": ^3.0.1

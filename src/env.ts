@@ -26,3 +26,6 @@ export const TIMEOUT = Number.parseInt(process.env.TIMEOUT ?? '', 10) || 20000
 export const AUTH_PUSH_KEY = process.env.AUTH_PUSH_KEY
 
 export const AUTH_FORWARD_KEY = process.env.AUTH_FORWARD_KEY
+
+// 兼容匿名 /forward。生产环境未设置 AUTH_FORWARD_KEY 时，默认拒绝匿名请求；设为 true 才放行。
+export const ALLOW_PUBLIC_FORWARD = process.env.ALLOW_PUBLIC_FORWARD === 'true'
