@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+# [2.6.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.5.1...v2.6.0) (2026-10-22)
+
+
+### ✨ 新功能
+
+* **security:** 升级 Node 运行时并默认关闭匿名 /forward ([057195d](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/057195d))
+
 ## [2.5.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.5.0...v2.5.1) (2026-06-19)
 
 
