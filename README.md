@@ -43,7 +43,7 @@ https://push.cmyr.dev
 - node `^22.23.4 || ^24.22.1 || >=26.12.1`
 - pnpm >= 11
 
-> Node.js 18/20 已结束支持，低于上述版本的运行时缺少 2026-10-21 Node.js 安全更新（含 Brotli、TLS、DNS 等 CVE），请先升级运行时。Docker 镜像已内置 Node.js 24.22.1。
+> Node.js 18/20 已结束支持，低于上述版本的运行时缺少 2026-10-21 Node.js 安全更新（含 Brotli、TLS、DNS 等 CVE），请先升级运行时。Docker 镜像已内置 Node.js 26.12.1。
 
 ## 🚀 部署
 
