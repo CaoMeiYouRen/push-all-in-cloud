@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: "lts/*"
           cache: "pnpm"
+      # Docker 冒烟测试：不构建镜像，直接校验 Dockerfile 中 node 基础镜像的安全补丁版本
+      - name: Docker smoke test
+        run: node scripts/check-docker-node.cjs --dockerfile Dockerfile
       - run: pnpm i --frozen-lockfile
       - run: pnpm run lint
       - run: pnpm run typecheck
