@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.6.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.6.0...v2.6.1) (2026-10-24)
+
+
+### 🐛 Bug 修复
+
+* **docker:** 基础镜像升级至 node:26.12.1-alpine ([7e2a94e](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/7e2a94e))
+
 # [2.6.0](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.5.1...v2.6.0) (2026-10-22)
 
 
