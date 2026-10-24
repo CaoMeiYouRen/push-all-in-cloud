@@ -1,4 +1,4 @@
-FROM node:26.12.0-alpine AS nodejs
+FROM node:26.12.1-alpine AS nodejs
 
 RUN npm i -g pnpm@11.2.2
 
