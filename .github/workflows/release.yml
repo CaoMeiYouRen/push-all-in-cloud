@@ -92,3 +92,6 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          # 关闭 provenance 与 sbom，避免 OCI 空描述符导致阿里云镜像仓库拒绝推送
+          provenance: false
+          sbom: false
