@@ -1,5 +1,12 @@
 # push-all-in-cloud
 
+## [2.6.2](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.6.1...v2.6.2) (2026-10-24)
+
+
+### 🐛 Bug 修复
+
+* **ci:** Release 工作流关闭 buildx provenance 与 sbom 以兼容阿里云镜像仓库 ([54e922c](https://github.com/CaoMeiYouRen/push-all-in-cloud/commit/54e922c))
+
 ## [2.6.1](https://github.com/CaoMeiYouRen/push-all-in-cloud/compare/v2.6.0...v2.6.1) (2026-10-24)
 
 
