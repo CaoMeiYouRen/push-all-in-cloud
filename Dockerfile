@@ -33,8 +33,9 @@ RUN export PROJECT_ROOT=/app/ && \
 # 阶段三：生产阶段
 FROM nodejs AS runtime
 
-# 防止后续把基础镜像改回未修复的 Node 版本
-RUN node -e "const v = process.versions.node.split('.').map(Number); const ok = (v[0] === 22 && (v[1] > 23 || (v[1] === 23 && v[2] >= 4))) || (v[0] === 24 && (v[1] > 22 || (v[1] === 22 && v[2] >= 1))) || (v[0] === 26 && (v[1] > 12 || (v[1] === 12 && v[2] >= 1))) || v[0] > 26; if (!ok) { console.error('Patched Node.js (22.23.4+ / 24.22.1+ / 26.12.1+) is required, got ' + process.versions.node); process.exit(1) }"
+# 防止后续把基础镜像改回未修复的 Node 版本（同一脚本在 Test 工作流中提前校验 Dockerfile）
+COPY scripts/check-docker-node.cjs /tmp/check-docker-node.cjs
+RUN node /tmp/check-docker-node.cjs && rm /tmp/check-docker-node.cjs
 
 # 官方 node:alpine 不自带 zoneinfo，docker-compose 中的 TZ 需要它
 RUN apk add --no-cache tzdata
